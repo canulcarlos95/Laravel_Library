@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Library</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
+@section('content')
+<style>
             html, body {
                 background-color: #fff;
                 color: #636b6f;
@@ -22,7 +12,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 60vh;
             }
 
             .flex-center {
@@ -46,14 +36,12 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 40px;
             }
 
             .links > a {
                 color: #636b6f;
                 padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
@@ -63,19 +51,13 @@
                 margin-bottom: 30px;
             }
         </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            <div class="content">
-                <div class="title m-b-md">
-                    Library
-                </div>
-
-                <div class="links">
-                    <a href="{{ url('/login') }}">Login</a>
-                    <a href="{{ url('/register') }}">Register</a>
-                </div>
-            </div>
+<div class="flex-center position-ref full-height">
+    <div class="content">
+        <div class="title m-b-md links">
+            <a href="autor">Authors</a>
+            <a href="libro">Books</a>
         </div>
-    </body>
-</html>
+    </div>
+
+</div>
+@endsection

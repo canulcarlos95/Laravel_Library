@@ -43,7 +43,7 @@ class AutorContoller extends Controller
     public function store(AutorRequest $request)
     {
         autor::create($request->all());
-        return redirect()->route('autor.index')->with('message','Elemento Agregado');
+        return redirect()->route('autor.index');
     }
 
     /**

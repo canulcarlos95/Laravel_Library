@@ -59,7 +59,13 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('role_id') ? ' has-error' : '' }}">
+                            <label for="role_id" class="col-md-4 control-label">Role</label>
 
+                            <div class="col-md-6">
+                                <input id="role_id" type="text" class="form-control" name="role_id" required>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

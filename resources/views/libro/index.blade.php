@@ -39,7 +39,7 @@
                     </table>
                 </div>
             </div>
-            <a class="btn btn-danger" href="{{ url('/home') }}">Back</a>
+            <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
             {{link_to_route('libro.create','Add New Book',null,['class'=>'btn btn-primary']) }}
 
         </div>

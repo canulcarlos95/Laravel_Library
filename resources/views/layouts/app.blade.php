@@ -35,7 +35,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/home') }}">Library</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">Library</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">

@@ -29,7 +29,7 @@
                     </table>
                 </div>
             </div>
-            <a class="btn btn-danger" href="{{ url('/home') }}">Back</a>
+            <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
             {{link_to_route('autor.create','Add New Author',null,['class'=>'btn btn-primary']) }}
         </div>
     </div>

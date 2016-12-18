@@ -6,6 +6,7 @@ use Library\Models\User;
 use Validator;
 use Library\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Library\Models\Roles;
 
 class RegisterController extends Controller
 {
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,9 +37,8 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest');        
     }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -51,6 +51,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'role_id' => 'required',
         ]);
     }
 
@@ -66,6 +67,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role_id'=>$data['role_id'],
         ]);
     }
 }

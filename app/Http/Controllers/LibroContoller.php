@@ -42,7 +42,7 @@ class LibroContoller extends Controller
     public function store(LibroRequest $request)
     {
         libro::create($request->all());
-        return redirect()->route('libro.index')->with('message','Elemento Agregado');
+        return redirect()->route('libro.index');
     }
 
     /**
