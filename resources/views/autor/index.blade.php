@@ -30,10 +30,10 @@
                     </table>
                 </div>
             </div>
-            <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
             @if($role==2)
                 {{link_to_route('autor.create','Add New Author',null,['class'=>'btn btn-primary']) }}
             @endif
+            <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
         </div>
     </div>
 </div>

@@ -31,6 +31,9 @@ class LibroContoller extends Controller
      */
     public function create()
     {
+        if((Auth::user()->role_id)=='3'){
+            return view('errors.error');
+        }
         $authorname = Autor::pluck('name','id');
         return view('libro.create',compact('authorname'));//
     }
@@ -66,6 +69,9 @@ class LibroContoller extends Controller
      */
     public function edit(Libro $libro)
     {
+        if((Auth::user()->role_id)=='3'){
+            return view('errors.error');
+        }
         $authorname = Autor::pluck('name','id');
         return view('libro.edit',compact('libro','authorname'));
     }

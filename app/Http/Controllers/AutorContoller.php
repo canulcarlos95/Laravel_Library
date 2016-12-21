@@ -34,7 +34,10 @@ class AutorContoller extends Controller
      */
     public function create()
     {
-        return view('autor.create');
+        if((Auth::user()->role_id)=='2'){
+            return view('autor.create');
+        }
+        return view('errors.error');
     }
 
     /**
@@ -68,7 +71,10 @@ class AutorContoller extends Controller
      */
      public function edit(Autor $autor)
     {
-        return view('autor.edit',compact('autor'));
+        if((Auth::user()->role_id)=='2'){
+            return view('autor.edit',compact('autor'));
+        }
+        return view('errors.error');
     }
 
 

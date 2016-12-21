@@ -40,10 +40,10 @@
                     </table>
                 </div>
             </div>
-            <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
             @if($role==2||$role==1)
             {{link_to_route('libro.create','Add New Book',null,['class'=>'btn btn-primary']) }}
             @endif
+            <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
         </div>
     </div>
 </div>
