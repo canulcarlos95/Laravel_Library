@@ -5,6 +5,7 @@ use Library\Models\Libro;
 use Library\Models\Autor;
 use Illuminate\Http\Request;
 use Library\Http\Requests\LibroRequest;
+use Illuminate\Support\Facades\Auth;
 class LibroContoller extends Controller
 {
     public function __construct()
@@ -18,8 +19,9 @@ class LibroContoller extends Controller
      */
     public function index()
     {
+        $role = Auth::user()->role_id;
         $libros = Libro::all();
-        return view('libro.index',compact('libros'));
+        return view('libro.index',compact('libros','role'));
     }
 
     /**

@@ -26,12 +26,13 @@
                             <td>{{$libro->editorial}}</td>
                             <td>{{$libro->autor->name}}</td>
                             <td>
+                            @if($role==2||$role==1)
                                 {!!Form::model($libro,array('route'=>['libro.destroy',$libro->id],'method'=>'DELETE'))!!}
                                     {{link_to_route('libro.edit','Update',[$libro->id],['class'=>'btn btn-primary'])}}
 
                                     {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}                                  
                                 {!!Form::close()!!}
-                               
+                            @endif
 
                             </td>
                         </tr>
@@ -40,8 +41,9 @@
                 </div>
             </div>
             <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
+            @if($role==2||$role==1)
             {{link_to_route('libro.create','Add New Book',null,['class'=>'btn btn-primary']) }}
-
+            @endif
         </div>
     </div>
 </div>

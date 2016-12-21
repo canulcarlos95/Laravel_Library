@@ -21,7 +21,9 @@
                             <td>{{$autor->name}}</td>
                             <td>{{$autor->country}}</td>
                             <td>
+                            @if($role==2)
                                 {{link_to_route('autor.edit','Update',[$autor->id],['class'=>'btn btn-primary'])}}
+                            @endif
                             </td>
                         </tr>
                     @endforeach
@@ -29,7 +31,9 @@
                 </div>
             </div>
             <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
-            {{link_to_route('autor.create','Add New Author',null,['class'=>'btn btn-primary']) }}
+            @if($role==2)
+                {{link_to_route('autor.create','Add New Author',null,['class'=>'btn btn-primary']) }}
+            @endif
         </div>
     </div>
 </div>
