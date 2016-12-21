@@ -59,7 +59,7 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-                       <!-- <div class="form-group{{ $errors->has('role_id') ? ' has-error' : '' }}">
+                       <div class="form-group{{ $errors->has('role_id') ? ' has-error' : '' }}">
                             <label for="role_id" class="col-md-4 control-label">Role</label>
 
                             <div class="col-md-6">
@@ -68,14 +68,14 @@
                                     '2'=>'Editorial',
                                     '3'=>'Guest',
                                 ], null,['placeholder' => 'Select a role...','class'=>'form-control']) }}
-                                <input id="role_id" type="text" class="form-control" name="role_id" required>
+                               <!-- <input id="role_id" type="text" class="form-control" name="role_id" required>-->
                                 @if ($errors->has('role_id'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('role_id') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

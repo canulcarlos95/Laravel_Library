@@ -5,6 +5,7 @@ use Library\Models\Autor;
 use Library\Models\User;
 use Illuminate\Http\Request;
 use Library\Http\Requests\AutorRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AutorContoller extends Controller
 {
@@ -19,7 +20,7 @@ class AutorContoller extends Controller
      */
     public function index()
     {
-        
+        //echo Auth::id();
         $autores = Autor::all();
         return view('autor.index',compact('autores'));
 

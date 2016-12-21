@@ -13,25 +13,29 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->integer('id')->unique()->unsigned();
+            $table->string('name');
+            $table->timestamps();
+        });
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('role');
-            $table->integer('permissions');
             $table->timestamps();
+        });
+        Schema::create('perm_role', function (Blueprint $table) {
+            $table->integer('perm_id')->unsigned();
+            $table->integer('role_id')->unsigned();
+            $table->foreign('perm_id')->references('id')->on('permissions');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
-            $table->rememberToken();
-            $table->timestamps();
-        });
-        Schema::create('user_role', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('role_id')->unsigned();
+            $table->integer('role_id')->unsigned()->nullable();
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -44,8 +48,9 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_role');
+        Schema::drop('perm_role');
         Schema::drop('users');
-        Schema::drop('roles');
+        Schema::drop('role');
+        Schema::drop('permissions');
     }
 }
