@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->middleware('auth');
 Route::resource('libro','LibroContoller');
 Route::resource('autor','AutorContoller');
 Route::get('/redirect', 'SocialAuthController@redirect');

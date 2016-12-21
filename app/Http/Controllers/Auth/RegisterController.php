@@ -6,7 +6,7 @@ use Library\Models\User;
 use Validator;
 use Library\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Library\Models\Roles;
+use Library\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -39,6 +39,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');        
     }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -51,7 +52,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-            'role_id' => 'required'
+            //'role_id' => 'required'
         ]);
     }
 
@@ -63,11 +64,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'role_id'=>$data['role_id'],
+            //'role_id'=>$data['role_id'],
         ]);
     }
 }

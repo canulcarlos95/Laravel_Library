@@ -2,6 +2,7 @@
 
 namespace Library\Http\Controllers;
 use Library\Models\Autor;
+use Library\Models\User;
 use Illuminate\Http\Request;
 use Library\Http\Requests\AutorRequest;
 

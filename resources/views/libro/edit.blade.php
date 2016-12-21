@@ -27,7 +27,7 @@
                         </div>
                         <div class="form-group">
                             {!!Form::label('author_id','Author')!!}
-                            {{ Form::select('author_id', $authorname, null,['placeholder' => 'Selecciona un autor...','class'=>'form-control']) }}
+                            {{ Form::select('author_id', $authorname, null,['placeholder' => 'Select an author...','class'=>'form-control']) }}
                         </div>
                         <div class="form-group">
                             {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}

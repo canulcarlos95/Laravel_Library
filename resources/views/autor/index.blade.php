@@ -7,7 +7,6 @@
             
             <div class="panel panel-default">
                 <div class="panel-heading">Authors</div>
-
                 <div class="panel-body">
                     <table class="table">
                         <tr>
