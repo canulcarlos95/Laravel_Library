@@ -12,4 +12,7 @@ class Libro extends Model
     public function autor() {
     	return $this->hasOne("Library\Models\Autor", "id", "author_id");
     }
+    public function scopeSearch($query, $title){
+    	return $query->where('title','LIKE',"%$title%");
+    }
 }

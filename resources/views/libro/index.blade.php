@@ -9,6 +9,12 @@
                 <div class="panel-heading">Books</div>
 
                 <div class="panel-body">
+                    {!!Form::open(['route'=>'libro.index','method'=>'GET','class'=>'navbar-form pull-right'])!!}
+                        <div class="input-group">
+                            {!!Form::text('title',null,['class'=>'form-control','placeholder'=>'Search a Book...','aria-describedby'=>'search'])!!}
+                            <span class="input-group-addon" id="search"><button style="border:none;">Search</button></span>
+                        </div>
+                    {!!Form::close()!!}
                     <table class="table">
                         <tr>
                             <th>Title</th>
@@ -18,17 +24,17 @@
                             <th>Author</th>
                             <th></th>
                         </tr>
-                    @foreach($libros as $libro)
+                    @foreach($books as $book)
                         <tr>
-                            <td>{{$libro->title}}</td>
-                            <td>{{$libro->pages}}</td>
-                            <td>{{$libro->price}}</td>
-                            <td>{{$libro->editorial}}</td>
-                            <td>{{$libro->autor->name}}</td>
+                            <td>{{$book->title}}</td>
+                            <td>{{$book->pages}}</td>
+                            <td>{{$book->price}}</td>
+                            <td>{{$book->editorial}}</td>
+                            <td>{{$book->autor->name}}</td>
                             <td>
                             @if($role==2||$role==1)
-                                {!!Form::model($libro,array('route'=>['libro.destroy',$libro->id],'method'=>'DELETE'))!!}
-                                    {{link_to_route('libro.edit','Update',[$libro->id],['class'=>'btn btn-primary'])}}
+                                {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
+                                    {{link_to_route('libro.edit','Update',[$book->id],['class'=>'btn btn-primary'])}}
 
                                     {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}                                  
                                 {!!Form::close()!!}

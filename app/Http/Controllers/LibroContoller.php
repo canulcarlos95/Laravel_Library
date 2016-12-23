@@ -17,11 +17,11 @@ class LibroContoller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $books=Libro::Search($request->title)->paginate(10);
         $role = Auth::user()->role_id;
-        $libros = Libro::all();
-        return view('libro.index',compact('libros','role'));
+        return view('libro.index',compact('books','role'));
     }
 
     /**

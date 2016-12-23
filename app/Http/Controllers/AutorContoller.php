@@ -19,11 +19,11 @@ class AutorContoller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $authors=Autor::Search($request->name)->paginate(10);
         $role = Auth::user()->role_id;
-        $autores = Autor::all();
-        return view('autor.index',compact('autores','role'));
+        return view('autor.index',compact('authors','role'));
 
     }
 
