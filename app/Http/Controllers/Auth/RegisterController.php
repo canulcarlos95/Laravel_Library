@@ -3,6 +3,7 @@
 namespace Library\Http\Controllers\Auth;
 
 use Library\Models\User;
+use Library\Models\Autor;
 use Validator;
 use Library\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -63,13 +64,26 @@ class RegisterController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {
-        
+    {   
+        if($data['role_id']=='1')
+        {
+            if(User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'role_id'=>$data['role_id'],
+            ])){
+                return Autor::create([
+                    'name'=>$data['name'],
+                    'country'=>'',
+                ]);
+            }
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role_id'=>$data['role_id'],
-        ]);
+        ]);      
     }
 }

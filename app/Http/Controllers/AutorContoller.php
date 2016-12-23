@@ -23,7 +23,8 @@ class AutorContoller extends Controller
     {
         $authors=Autor::Search($request->name)->paginate(10);
         $role = Auth::user()->role_id;
-        return view('autor.index',compact('authors','role'));
+        $validate = Auth::user()->name;
+        return view('autor.index',compact('authors','role','validate'));
 
     }
 
@@ -71,7 +72,7 @@ class AutorContoller extends Controller
      */
      public function edit(Autor $autor)
     {
-        if((Auth::user()->role_id)=='2'){
+        if((Auth::user()->role_id)=='2'||Auth::user()->name==$autor->name){
             return view('autor.edit',compact('autor'));
         }
         return view('errors.error');

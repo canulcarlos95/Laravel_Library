@@ -21,7 +21,8 @@ class LibroContoller extends Controller
     {
         $books=Libro::Search($request->title)->paginate(10);
         $role = Auth::user()->role_id;
-        return view('libro.index',compact('books','role'));
+        $validate = Auth::user()->name;
+        return view('libro.index',compact('books','role','validate'));
     }
 
     /**
@@ -69,7 +70,7 @@ class LibroContoller extends Controller
      */
     public function edit(Libro $libro)
     {
-        if((Auth::user()->role_id)=='3'){
+        if((Auth::user()->role_id)=='3'||Auth::user()->name!=($libro->autor->name)){
             return view('errors.error');
         }
         $authorname = Autor::pluck('name','id');

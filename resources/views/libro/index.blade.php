@@ -32,7 +32,7 @@
                             <td>{{$book->editorial}}</td>
                             <td>{{$book->autor->name}}</td>
                             <td>
-                            @if($role==2||$role==1)
+                            @if($validate==($book->autor->name)&&($role==2||$role==1))
                                 {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
                                     {{link_to_route('libro.edit','Update',[$book->id],['class'=>'btn btn-primary'])}}
 
