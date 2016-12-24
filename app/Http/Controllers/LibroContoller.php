@@ -3,6 +3,7 @@
 namespace Library\Http\Controllers;
 use Library\Models\Libro;
 use Library\Models\Autor;
+use Library\Models\Editorial;
 use Illuminate\Http\Request;
 use Library\Http\Requests\LibroRequest;
 use Illuminate\Support\Facades\Auth;
@@ -35,8 +36,14 @@ class LibroContoller extends Controller
         if((Auth::user()->role_id)=='3'){
             return view('errors.error');
         }
+        if((Auth::user()->role_id)=='1'){
+            $editorial = Editorial::pluck('name','id');
+            $authorname = Autor::pluck('name','id');
+            return view('libro.create',compact('authorname','editorial'));
+        }
+        $editorial = Editorial::pluck('name','id');
         $authorname = Autor::pluck('name','id');
-        return view('libro.create',compact('authorname'));//
+        return view('libro.create',compact('authorname','editorial'));//
     }
 
     /**
@@ -74,7 +81,8 @@ class LibroContoller extends Controller
             return view('errors.error');
         }
         $authorname = Autor::pluck('name','id');
-        return view('libro.edit',compact('libro','authorname'));
+        $edit = Editorial::pluck('name','id');
+        return view('libro.edit',compact('libro','authorname','edit'));
     }
 
     /**

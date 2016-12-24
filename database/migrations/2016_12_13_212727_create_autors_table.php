@@ -13,10 +13,17 @@ class CreateAutorsTable extends Migration
      */
     public function up()
     {
+        Schema::create('editorials', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+        });
         Schema::create('autors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('country');
+            $table->integer('edit_id')->unsigned()->nullable();
+            $table->foreign('edit_id')->references('id')->on('editorials');
             $table->timestamps();
         });
     }
@@ -28,6 +35,7 @@ class CreateAutorsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('editorial');
         Schema::dropIfExists('autors');
     }
 }

@@ -3,6 +3,7 @@
 namespace Library\Http\Controllers;
 use Library\Models\Autor;
 use Library\Models\User;
+use Library\Models\Editorial;
 use Library\Models\Role;
 use Illuminate\Http\Request;
 use Library\Http\Requests\AutorRequest;
@@ -73,7 +74,8 @@ class AutorContoller extends Controller
      public function edit(Autor $autor)
     {
         if((Auth::user()->role_id)=='2'||Auth::user()->name==$autor->name){
-            return view('autor.edit',compact('autor'));
+            $edit=Editorial::pluck('name','id');
+            return view('autor.edit',compact('autor','edit'));
         }
         return view('errors.error');
     }

@@ -27,7 +27,7 @@ class LibroRequest extends FormRequest
             'title'=>'required',
             'pages'=>'required',
             'price'=>'required',
-            'editorial'=>'required',
+            'edit_id'=>'required',
             'author_id'=>'required'
         ];
     }

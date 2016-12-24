@@ -22,8 +22,8 @@
                             {!!Form::text('price',null,['class'=>'form-control'])!!}
                         </div>
                         <div class="form-group">
-                            {!!Form::label('editorial','Editorial')!!}
-                            {!!Form::text('editorial',null,['class'=>'form-control'])!!}
+                            {!!Form::label('edit_id','Editorial')!!}
+                            {{ Form::select('edit_id', $editorial, null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
                         </div>
                         <div class="form-group">
                             {!!Form::label('author_id','Author')!!}

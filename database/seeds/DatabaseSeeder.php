@@ -136,6 +136,11 @@ class DatabaseSeeder extends Seeder
       DB::table('perm_role')->insert(array(
         'role_id'  => '3',
         'perm_id'=>'2'
-      )); 
+      ));
+      DB::table('editorials')->insert(array(
+        'name'  => 'Independent',
+        'created_at' => date('Y-m-d H:m:s'),
+        'updated_at' => date('Y-m-d H:m:s')
+      ));
     }
 }

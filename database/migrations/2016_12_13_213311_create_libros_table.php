@@ -18,9 +18,10 @@ class CreateLibrosTable extends Migration
             $table->string('title');
             $table->integer('pages');
             $table->integer('price');
-            $table->string('editorial');
+            $table->integer('edit_id')->unsigned();
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')->references('id')->on('autors');
+            $table->foreign('edit_id')->references('id')->on('editorials');
             $table->timestamps();
         });
     }
@@ -32,6 +33,7 @@ class CreateLibrosTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('editorial');
         Schema::dropIfExists('libros');
     }
 }

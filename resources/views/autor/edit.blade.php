@@ -18,6 +18,10 @@
                             @include('autor/countries', ['default' => null])
                         </div>
                         <div class="form-group">
+                            {!!Form::label('edit_id','Editorial')!!}
+                            {{ Form::select('edit_id', $edit, null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
+                        </div>
+                        <div class="form-group">
                             {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}
                             <a class="btn btn-danger" href="{{ url('/autor') }}">Cancel</a>
                         </div>

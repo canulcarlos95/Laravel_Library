@@ -16,16 +16,16 @@
                     {!!Form::close()!!}
                     <table class="table">
                         <tr>
-                            <th>Author Id</th>
                             <th>Author Name</th>
                             <th>Country</th>
+                            <th>Editorial</th>
                             <th></th>
                         </tr>
                     @foreach($authors as $author)
                         <tr>
-                            <td>{{$author->id}}</td>
                             <td>{{$author->name}}</td>
                             <td>{{$author->country}}</td>
+                            <td>{{$author->editorial->name}}</td>
                             <td>
                             @if($role==2||$validate==($author->name))
                                 {{link_to_route('autor.edit','Update',[$author->id],['class'=>'btn btn-primary'])}}
