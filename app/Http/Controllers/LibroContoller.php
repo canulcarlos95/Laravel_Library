@@ -1,6 +1,7 @@
 <?php
 
 namespace Library\Http\Controllers;
+use DB;
 use Library\Models\Libro;
 use Library\Models\Autor;
 use Library\Models\Editorial;
@@ -37,13 +38,17 @@ class LibroContoller extends Controller
             return view('errors.error');
         }
         if((Auth::user()->role_id)=='1'){
-            $editorial = Editorial::pluck('name','id');
-            $authorname = Autor::pluck('name','id');
-            return view('libro.create',compact('authorname','editorial'));
+            $authorname = Autor::pluck('name','id')->search(Auth::user()->name);
+            $user = DB::table('autors')->where('id', $authorname)->first();
+            $editorial = DB::table('editorials')->where('id', $user->edit_id)->first();
+            $role = Auth::user()->role_id;
+            return view('libro.create',compact('libro','role','user','editorial'));
         }
-        $editorial = Editorial::pluck('name','id');
         $authorname = Autor::pluck('name','id');
-        return view('libro.create',compact('authorname','editorial'));//
+        $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
+        $user = DB::table('editorials')->where('id', $aux)->first();
+        $role = Auth::user()->role_id;
+        return view('libro.create',compact('libro','authorname','user','role'));
     }
 
     /**
@@ -77,12 +82,21 @@ class LibroContoller extends Controller
      */
     public function edit(Libro $libro)
     {
-        if((Auth::user()->role_id)=='3'||Auth::user()->name!=($libro->autor->name)){
+        if((Auth::user()->role_id)=='3'&&Auth::user()->name!=($libro->autor->name)){
             return view('errors.error');
         }
-        $authorname = Autor::pluck('name','id');
-        $edit = Editorial::pluck('name','id');
-        return view('libro.edit',compact('libro','authorname','edit'));
+        if(Auth::user()->role_id=='2'){
+            $authorname = Autor::pluck('name','id');
+            $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
+            $user = DB::table('editorials')->where('id', $aux)->first();
+            $role = Auth::user()->role_id;
+            return view('libro.edit',compact('libro','authorname','user','role'));
+        }
+        $authorname = Autor::pluck('name','id')->search(Auth::user()->name);
+        $user = DB::table('autors')->where('id', $authorname)->first();
+        $editorial = DB::table('editorials')->where('id', $user->edit_id)->first();
+        $role = Auth::user()->role_id;
+        return view('libro.edit',compact('libro','role','user','editorial'));
     }
 
     /**

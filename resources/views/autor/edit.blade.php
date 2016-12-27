@@ -17,10 +17,17 @@
                             {!!Form::label('country','Country')!!}
                             @include('autor/countries', ['default' => null])
                         </div>
-                        <div class="form-group">
-                            {!!Form::label('edit_id','Editorial')!!}
-                            {{ Form::select('edit_id', $edit, null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
-                        </div>
+                        @if($role=='2')
+                            <div class="form-group">
+                                {!!Form::label('edit_id','Editorial')!!}
+                                {{ Form::select('edit_id', [$user->id=>$user->name], null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
+                            </div>
+                        @elseif($role=='1')
+                            <div class="form-group">
+                                {!!Form::label('edit_id','Editorial')!!}
+                                {{ Form::select('edit_id', $edit, null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
+                            </div>
+                        @endif
                         <div class="form-group">
                             {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}
                             <a class="btn btn-danger" href="{{ url('/autor') }}">Cancel</a>

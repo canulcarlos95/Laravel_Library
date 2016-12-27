@@ -1,6 +1,7 @@
 <?php
 
 namespace Library\Http\Controllers;
+use DB;
 use Library\Models\Autor;
 use Library\Models\User;
 use Library\Models\Editorial;
@@ -37,7 +38,9 @@ class AutorContoller extends Controller
     public function create()
     {
         if((Auth::user()->role_id)=='2'){
-            return view('autor.create');
+            $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
+            $user = DB::table('editorials')->where('id', $aux)->first();
+            return view('autor.create',compact('user'));
         }
         return view('errors.error');
     }
@@ -73,9 +76,16 @@ class AutorContoller extends Controller
      */
      public function edit(Autor $autor)
     {
-        if((Auth::user()->role_id)=='2'||Auth::user()->name==$autor->name){
+        if((Auth::user()->role_id)=='2'){
+            $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
+            $user = DB::table('editorials')->where('id', $aux)->first();
+            $role = Auth::user()->role_id;
+            return view('autor.edit',compact('autor','user','role'));
+        }
+        elseif(Auth::user()->name==$autor->name){
             $edit=Editorial::pluck('name','id');
-            return view('autor.edit',compact('autor','edit'));
+            $role = Auth::user()->role_id;
+            return view('autor.edit',compact('autor','edit','role'));
         }
         return view('errors.error');
     }

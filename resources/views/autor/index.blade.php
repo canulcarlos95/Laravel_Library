@@ -27,7 +27,7 @@
                             <td>{{$author->country}}</td>
                             <td>{{$author->editorial->name}}</td>
                             <td>
-                            @if($role==2||$validate==($author->name))
+                            @if($validate==($author->name)||$validate==($author->editorial->name))
                                 {{link_to_route('autor.edit','Update',[$author->id],['class'=>'btn btn-primary'])}}
                             @endif
                             </td>
