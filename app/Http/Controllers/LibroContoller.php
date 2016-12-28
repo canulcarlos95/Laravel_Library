@@ -21,7 +21,7 @@ class LibroContoller extends Controller
      */
     public function index(Request $request)
     {
-        $books=Libro::Search($request->title)->paginate(10);
+        $books=Libro::Search($request->title)->paginate(30);
         $role = Auth::user()->role_id;
         $validate = Auth::user()->name;
         return view('libro.index',compact('books','role','validate'));
@@ -59,7 +59,9 @@ class LibroContoller extends Controller
      */
     public function store(LibroRequest $request)
     {
-        libro::create($request->all());
+        $created = libro::create($request->all());
+        $book = libro::find($created->id);
+        $book->author()->attach($request->author_id);
         return redirect()->route('libro.index');
     }
 
@@ -109,6 +111,8 @@ class LibroContoller extends Controller
     public function update(LibroRequest $request, Libro $libro)
     {
         $libro->update($request->all());
+        $book = libro::find($libro->id);
+        $book->author()->attach($request->author_id);
         return redirect()->route('libro.index');
     }
 
@@ -119,7 +123,9 @@ class LibroContoller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Libro $libro)
-    {
+    {   
+        $book = libro::find($libro->id);
+        $book->author()->detach();
         $libro->delete();
         return redirect()->route('libro.index');
     }

@@ -19,9 +19,14 @@ class CreateLibrosTable extends Migration
             $table->integer('pages');
             $table->integer('price');
             $table->integer('edit_id')->unsigned();
-            $table->integer('author_id')->unsigned();
-            $table->foreign('author_id')->references('id')->on('autors');
             $table->foreign('edit_id')->references('id')->on('editorials');
+            $table->timestamps();
+        });
+        Schema::create('book_authors', function (Blueprint $table) {
+            $table->integer('author_id')->unsigned();
+            $table->integer('book_id')->unsigned();
+            $table->foreign('author_id')->references('id')->on('autors');
+            $table->foreign('book_id')->references('id')->on('libros');
             $table->timestamps();
         });
     }
@@ -35,5 +40,6 @@ class CreateLibrosTable extends Migration
     {
         Schema::dropIfExists('editorial');
         Schema::dropIfExists('libros');
+        Schema::dropIfExists('book_authors');
     }
 }

@@ -69,7 +69,7 @@ class RegisterController extends Controller
         if($data['role_id']=='1'&&Autor::create([
                 'name'=>$data['name'],
                 'country'=>'',
-                'edit_id'=>''
+                'edit_id'=>'1'
             ]))
         {
             return User::create([

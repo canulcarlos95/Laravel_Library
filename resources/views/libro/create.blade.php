@@ -27,8 +27,8 @@
                                 {{ Form::select('edit_id', [$user->id=>$user->name], null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
                             </div>
                             <div class="form-group">
-                                {!!Form::label('author_id','Author')!!}
-                                {{ Form::select('author_id', [], null,['placeholder' => 'Select an author...','class'=>'form-control']) }}
+                                {!!Form::label('author_id','Authors')!!}<br>
+                                {{ Form::select('author_id', $authorname, null,['placeholder' => 'Select an author...','class'=>'form-control']) }}
                             </div>
                         @elseif($role=='1')
                             <div class="form-group">
@@ -36,8 +36,9 @@
                                 {{ Form::select('edit_id', [$editorial->id=>$editorial->name], null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
                             </div>
                             <div class="form-group">
-                                {!!Form::label('author_id','Author')!!}
-                                {{ Form::select('author_id', [$user->id=>$user->name], null,['placeholder' => 'Select an author...','class'=>'form-control']) }}
+                                {!!Form::label('author_label','Authors')!!}<br>
+                                {!!Form::label('author_id',$user->name)!!}
+                                {{Form::checkbox('author_id',$user->id)}}
                             </div>
                         @endif
                         <div class="form-group">

@@ -7,10 +7,10 @@ use Library\Models\Autor;
 
 class Libro extends Model
 {
-    protected $fillable = ['title','pages','price','author_id','edit_id'];//
+    protected $fillable = ['title','pages','price','edit_id'];//
 
-    public function autor() {
-    	return $this->hasOne("Library\Models\Autor", "id", "author_id");
+    public function author() {
+        return $this->belongsToMany('Library\Models\Autor','book_authors','book_id','author_id')->withTimestamps();
     }
     public function editorial() {
     	return $this->hasOne("Library\Models\Editorial", "id", "edit_id");

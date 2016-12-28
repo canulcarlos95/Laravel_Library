@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            
             <div class="panel panel-default">
                 <div class="panel-heading">Books</div>
 
@@ -21,7 +20,7 @@
                             <th>Pages</th>
                             <th>Price</th>
                             <th>Editorial</th>
-                            <th>Author</th>
+                            <th>Authors</th>
                             <th></th>
                         </tr>
                     @foreach($books as $book)
@@ -30,17 +29,31 @@
                             <td>{{$book->pages}}</td>
                             <td>{{$book->price}}</td>
                             <td>{{$book->editorial->name}}</td>
-                            <td>{{$book->autor->name}}</td>
                             <td>
-                            @if($validate==($book->autor->name)||$validate==($book->editorial->name))
-                                {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
-                                    {{link_to_route('libro.edit','Update',[$book->id],['class'=>'btn btn-primary'])}}
-
-                                    {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}                                  
-                                {!!Form::close()!!}
-                            @endif
-
+                            @foreach($book->author as $author)
+                                {{$author->name}}, 
+                                @if($validate==($author->name))
+                                    {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
+                                        <td>
+                                            {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
+                                        </td>
+                                        <td>
+                                            {{link_to_route('libro.edit','Update',[$book->id],['class'=>'btn btn-primary'])}}
+                                        </td>
+                                    {!!Form::close()!!}
+                                @endif
+                            @endforeach
                             </td>
+                            @if($validate==($book->editorial->name))
+                                    {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
+                                        <td>
+                                            {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
+                                        </td>
+                                        <td>
+                                            {{link_to_route('libro.edit','Update',[$book->id],['class'=>'btn btn-primary'])}}
+                                        </td>
+                                    {!!Form::close()!!}
+                            @endif
                         </tr>
                     @endforeach
                     </table>
@@ -50,6 +63,8 @@
             {{link_to_route('libro.create','Add New Book',null,['class'=>'btn btn-primary']) }}
             @endif
             <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
+            <br>
+            <br>
         </div>
     </div>
 </div>
