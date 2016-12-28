@@ -27,8 +27,14 @@
                                 {{ Form::select('edit_id', [$user->id=>$user->name], null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
                             </div>
                             <div class="form-group">
-                                {!!Form::label('author_id','Authors')!!}<br>
-                                {{ Form::select('author_id', $authorname, null,['placeholder' => 'Select an author...','class'=>'form-control']) }}
+                            {!!Form::label('author','Authors')!!}
+                                <div class="checkbox">
+                                    @foreach($name as $authname)
+                                        <label>
+                                          <input name='author_id' type="checkbox" value='{{$authname->id}}'>{{$authname->id.$authname->name}}
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
                         @elseif($role=='1')
                             <div class="form-group">

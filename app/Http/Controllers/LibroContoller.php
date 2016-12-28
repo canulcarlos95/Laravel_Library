@@ -44,11 +44,11 @@ class LibroContoller extends Controller
             $role = Auth::user()->role_id;
             return view('libro.create',compact('libro','role','user','editorial'));
         }
-        $authorname = Autor::pluck('name','id');
         $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
         $user = DB::table('editorials')->where('id', $aux)->first();
+        $name = DB::table('autors')->where('edit_id', $aux)->get();
         $role = Auth::user()->role_id;
-        return view('libro.create',compact('libro','authorname','user','role'));
+        return view('libro.create',compact('libro','user','name','role'));
     }
 
     /**
