@@ -40,7 +40,10 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Be right back.</div>
+                <div class="title">You don´t have permissions to access.</div>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
             </div>
         </div>
     </body>

@@ -30,21 +30,14 @@
                             <td>{{$book->price}}</td>
                             <td>{{$book->editorial->name}}</td>
                             <td>
-                            @foreach($book->author as $author)
-                                {{$author->name}}, 
-                                @if($validate==($author->name))
-                                    {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
-                                        <td>
-                                            {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
-                                        </td>
-                                        <td>
-                                            {{link_to_route('libro.edit','Update',[$book->id],['class'=>'btn btn-primary'])}}
-                                        </td>
-                                    {!!Form::close()!!}
-                                @endif
-                            @endforeach
+                                @foreach($book->author as $author)
+                                    {{$author->name}},
+                                    @if($validate==($author->name))
+                                       <span class="hidden">{{$isequal=true}}</span>
+                                    @endif 
+                                @endforeach
                             </td>
-                            @if($validate==($book->editorial->name))
+                            @if($validate==($book->editorial->name)||$isequal||$validate==($author->name))
                                     {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
                                         <td>
                                             {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
@@ -53,6 +46,7 @@
                                             {{link_to_route('libro.edit','Update',[$book->id],['class'=>'btn btn-primary'])}}
                                         </td>
                                     {!!Form::close()!!}
+                                    <span class="hidden">{{$isequal=false}}</span>
                             @endif
                         </tr>
                     @endforeach

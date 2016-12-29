@@ -28,7 +28,13 @@
                             </div>
                             <div class="form-group">
                                 {!!Form::label('author_id','Author')!!}
-                                {{ Form::select('author_id', $authorname, null,['placeholder' => 'Select an author...','class'=>'form-control']) }}
+                                <div class="checkbox">
+                                    @foreach($name as $authname)
+                                        <label>
+                                            <input name='author_id' type="checkbox" value='{{$authname->id}}'>{{$authname->name}}
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
                         @elseif($role=='1')
                             <div class="form-group">
@@ -37,7 +43,11 @@
                             </div>
                             <div class="form-group">
                                 {!!Form::label('author_id','Author')!!}
-                                {{ Form::select('author_id', [$user->id=>$user->name], null,['placeholder' => 'Select an author...','class'=>'form-control']) }}
+                                <div class="checkbox">
+                                    <label>
+                                        <input name='author_id' type="checkbox" value='{{$user->id}}' checked>{{$user->name}}
+                                    </label>
+                                </div>
                             </div>
                         @endif
                         <div class="form-group">
