@@ -31,7 +31,8 @@
                                 <div class="checkbox">
                                     @foreach($name as $authname)
                                         <label>
-                                          <input name='author_id' type="checkbox" value='{{$authname->id}}'>{{$authname->id.$authname->name}}
+                                          <input name='author_id[]' type="checkbox" value='{{$authname->id}}'>{{$authname->name}}
+
                                         </label>
                                     @endforeach
                                 </div>
@@ -43,8 +44,8 @@
                             </div>
                             <div class="form-group">
                                 {!!Form::label('author_label','Authors')!!}<br>
-                                {!!Form::label('author_id',$user->name)!!}
                                 {{Form::checkbox('author_id',$user->id)}}
+                                {!!Form::label('author_id',$user->name)!!}
                             </div>
                         @endif
                         <div class="form-group">

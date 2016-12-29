@@ -24,7 +24,8 @@ class LibroContoller extends Controller
         $books=Libro::Search($request->title)->paginate(30);
         $role = Auth::user()->role_id;
         $validate = Auth::user()->name;
-        return view('libro.index',compact('books','role','validate'));
+        $isequal=false;
+        return view('libro.index',compact('books','role','isequal','validate'));
     }
 
     /**
@@ -60,8 +61,9 @@ class LibroContoller extends Controller
     public function store(LibroRequest $request)
     {
         $created = libro::create($request->all());
+        $myCheckboxes = $request->input('author_id');
         $book = libro::find($created->id);
-        $book->author()->attach($request->author_id);
+        $book->author()->attach($myCheckboxes);
         return redirect()->route('libro.index');
     }
 
@@ -88,11 +90,11 @@ class LibroContoller extends Controller
             return view('errors.error');
         }
         if(Auth::user()->role_id=='2'){
-            $authorname = Autor::pluck('name','id');
             $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
             $user = DB::table('editorials')->where('id', $aux)->first();
+            $name = DB::table('autors')->where('edit_id', $aux)->get();
             $role = Auth::user()->role_id;
-            return view('libro.edit',compact('libro','authorname','user','role'));
+            return view('libro.edit',compact('libro','name','user','role'));
         }
         $authorname = Autor::pluck('name','id')->search(Auth::user()->name);
         $user = DB::table('autors')->where('id', $authorname)->first();
@@ -112,6 +114,7 @@ class LibroContoller extends Controller
     {
         $libro->update($request->all());
         $book = libro::find($libro->id);
+        $book->author()->detach($request->author_id);
         $book->author()->attach($request->author_id);
         return redirect()->route('libro.index');
     }
