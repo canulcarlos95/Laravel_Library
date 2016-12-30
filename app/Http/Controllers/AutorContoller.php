@@ -21,30 +21,16 @@ class AutorContoller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request,Autor $autor)
     {
         $authors=Autor::Search($request->name)->paginate(10);
         $role = Auth::user()->role_id;
         $validate = Auth::user()->name;
-        return view('autor.index',compact('authors','role','validate'));
+        $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
+        $user = DB::table('editorials')->where('id', $aux)->first();
+        return view('autor.index',compact('authors','role','validate','user','autor'));
 
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        if((Auth::user()->role_id)=='2'){
-            $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
-            $user = DB::table('editorials')->where('id', $aux)->first();
-            return view('autor.create',compact('user'));
-        }
-        return view('errors.error');
-    }
-
     /**
      * Store a newly created resource in storage.
      *
