@@ -115,9 +115,10 @@
       </div>
       <div class="modal-body">
         <div class="panel-body">
-            <input type="text" name="author_id" id="author_id" value=""/>
+
             {!!Form::model($autor,array('route'=>['autor.update',$autor->id],'method'=>'PUT'))!!}
                 <div class="form-group">
+                    <input type="text" name="author_id" id="author_id" value="" class="form-control"/>
                     {!!Form::label('name','Author Name')!!}
                     {!!Form::text('name',null,['class'=>'form-control'])!!}
                 </div>
@@ -158,15 +159,4 @@
   </div>
 </div>
 <!--End Modal Edit Author-->
-<!--Script-->
-<script>
-  $(document).on("click", ".open-AddAuthorDialog", function () {
-     var myauthId = $(this).data('id');
-     $(".modal-body #author_id").val( myauthId );
-
-     // As pointed out in comments,
-     // it is superfluous to have to manually call the modal.
-     // $('#addBookDialog').modal('show');
-  });
-</script>
 @endsection

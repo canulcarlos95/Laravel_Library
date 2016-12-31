@@ -26,6 +26,15 @@
         src="https://code.jquery.com/jquery-3.1.1.js"
         integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
         crossorigin="anonymous"></script>
+    <script>
+      $(document).on("click", ".open-AddAuthorDialog", function () {
+        $(".modal-body #author_id").val( $(this).data('id') );
+        $(".modal-body #name").val( $(this).data('name') );
+        $(".modal-body #country").val( $(this).data('country') );
+        $(".modal-body #edit_id").val( $(this).data('editorial') );
+        }
+      );
+    </script>
 </head>
 <body>
     <div id="app">
