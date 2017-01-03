@@ -16,8 +16,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::resource('libro','LibroContoller', ['only' => ['index', 'store', 'update', 'destroy','edit']]);
-Route::resource('autor','AutorContoller', ['only' => ['index', 'store', 'update', 'destroy','edit']]);
-Route::post('/update','AutorContoller@update');
+Route::resource('libro','LibroContoller', ['only' => ['index', 'store', 'update', 'destroy']]);
+Route::resource('autor','AutorContoller', ['only' => ['index', 'store', 'update', 'destroy']]);
+Route::post('/updateauthor','AutorContoller@update');
+Route::post('/updatebook','LibroContoller@update');
 Route::get('/redirect', 'SocialAuthController@redirect');
 Route::get('/callback', 'SocialAuthController@callback');

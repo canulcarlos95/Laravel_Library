@@ -38,12 +38,20 @@
                                 @endforeach
                             </td>
                             @if($validate==($book->editorial->name)||$isequal||$validate==($author->name))
+                                    <td>
+                                      <button class="edit-modal btn btn-primary"
+                                              data-id="{{$book->id}}"
+                                              data-title="{{$book->title}}"
+                                              data-pages="{{$book->pages}}"
+                                              data-price="{{$book->price}}"
+                                              data-editorial="{{$book->edit_id}}"
+                                              data-toggle="modal">
+                                        Update
+                                      </button>
+                                    </td>
                                     {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
                                         <td>
                                             {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
-                                        </td>
-                                        <td>
-                                            {{link_to_route('libro.index','Update',[$book->id],['class'=>'btn btn-primary'])}}
                                         </td>
                                     {!!Form::close()!!}
                                     <span class="hidden">{{$isequal=false}}</span>
@@ -54,7 +62,7 @@
                 </div>
             </div>
             @if($role==2||$role==1)
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Create">
+              <button type="button" class="create-modal btn btn-primary" data-toggle="modal">
                 Add New Book
               </button>
             @endif
@@ -65,9 +73,8 @@
     </div>
 </div>
 <!--Modals-->
-<!--Modal create Book-->
   @if($role==2||$role==1)
-  <div class="modal fade" id="Create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -78,8 +85,10 @@
         </div>
         <div class="modal-body">
           <div class="panel-body">
-              {!!Form::open(array('route'=>'libro.store'))!!}
+              {!!Form::open(array('route'=>'libro.store'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
+              <form class="edit-form" role="form">
                   <div class="form-group">
+                      <input type="text" name="id" id="id" value="" class="form-control" style="display:none"/>
                       {!!Form::label('title','Title')!!}
                       {!!Form::text('title',null,['class'=>'form-control'])!!}
                   </div>
@@ -93,8 +102,7 @@
                   </div>
                   @if($role=='2')
                       <div class="form-group">
-                          {!!Form::label('edit_id','Editorial')!!}
-                          {{ Form::select('edit_id', [$user->id=>$user->name], null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
+                          {{ Form::text('edit_id',$user->id,['class'=>'form-control','style'=>'display:none']) }}
                       </div>
                       <div class="form-group">
                       {!!Form::label('author','Authors')!!}
@@ -109,19 +117,22 @@
                       </div>
                   @elseif($role=='1')
                       <div class="form-group">
-                          {!!Form::label('edit_id','Editorial')!!}
-                          {{ Form::select('edit_id', [$editorial->id=>$editorial->name], null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
+                          {{ Form::text('edit_id',$editorial->id,['class'=>'form-control','style'=>'display:none']) }}
                       </div>
                       <div class="form-group">
                           {!!Form::label('author_label','Authors')!!}<br>
-                          {{Form::checkbox('author_id',$user->id)}}
-                          {!!Form::label('author_id',$user->name)!!}
+                          <div class="checkbox">
+                              <label>
+                                  <input name='author_id' type="checkbox" value='{{$user->id}}' checked>{{$user->name}}
+                              </label>
+                          </div>
                       </div>
                   @endif
-                  <div class="form-group">
+                  <div class="add-author form-group">
                       {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}
                       <a class="btn btn-danger" href="{{ url('/libro') }}">Cancel</a>
                   </div>
+              </form>
               {!!Form::close()!!}
           </div>
           @if (count($errors) > 0)
@@ -133,10 +144,64 @@
                       </ul>
                   </div>
           @endif
+          <div class="modal-footer">
+						<button type="button" class="btn btn-primary actionBtn" data-dismiss="modal">
+							<span id="footer_action_button" class=""> Save</span>
+						</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">
+							<span class=""></span> Close
+						</button>
+					</div>
         </div>
       </div>
     </div>
   </div>
   @endif
-<!--End Modal Create Book-->
+<!--End Modals-->
+<!--scripts for modals-->
+<script>
+$(document).on('click', '.edit-modal', function() {
+  $('#footer_action_button').text("Update");
+  $('.modal-footer').show();
+  $('.add-author').hide();
+  $('.actionBtn').addClass('edit');
+  $('.modal-title').text('Edit Author');
+  $('.form-horizontal').hide();
+  $('.edit-form').show();
+  $('#id').val($(this).data('id'));
+  $('#title').val($(this).data('title'));
+  $('#pages').val($(this).data('pages'));
+  $('#price').val($(this).data('price'));
+  $('#myModal').modal('show');
+});
+$(document).on('click', '.create-modal', function() {
+  $('.modal-footer').hide();
+  $('.modal-title').text('Add Book');
+  $('.add-author').show();
+  $('.edit-form').hide();
+  $('.form-horizontal').show();
+  $('#title').val('');
+  $('#pages').val('');
+  $('#price').val('');
+  $('#myModal').modal('show');
+});
+$('.modal').on('click', '.edit', function() {
+  $.ajax({
+        type: 'post',
+        url: '/updatebook',
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $("#id").val(),
+            'title': $('#title').val(),
+            'pages': $('#pages').val(),
+            'price': $('#price').val(),
+            'edit_id': $('#edit_id').val()
+
+        },
+        success: function() {
+            location.reload();
+        }
+    });
+});
+</script>
 @endsection

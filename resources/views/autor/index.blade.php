@@ -26,19 +26,25 @@
                             <td>{{$author->name}}</td>
                             <td>{{$author->country}}</td>
                             <td>{{$author->editorial->name}}</td>
-                            <td>
                             @if($validate==($author->name)||$validate==($author->editorial->name))
+                                <td>
                                 <button class="edit-modal btn btn-primary"
                                         data-id="{{$author->id}}"
                                         data-name="{{$author->name}}"
                                         data-country="{{$author->country}}"
                                         data-editorial="{{$author->edit_id}}"
                                         data-toggle="modal">
-                                  Edit
+                                  Update
                                 </button>
-                                {{link_to_route('autor.index','Update',[$author->id],['class'=>'btn btn-primary'])}}
+                                </td>
+                                @if($validate==($author->editorial->name))
+                                  {!!Form::model($author,array('route'=>['autor.destroy',$author->id],'method'=>'DELETE'))!!}
+                                      <td>
+                                          {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
+                                      </td>
+                                  {!!Form::close()!!}
+                                @endif
                             @endif
-                            </td>
                         </tr>
                     @endforeach
                     </table>
@@ -68,7 +74,7 @@
               {!!Form::open(array('route'=>'autor.store'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
               <form class="edit-form" role="form">
                 <div class="form-group">
-                    <input type="text" name="id" id="author_id" value="" class="form-control"/>
+                    <input type="text" name="id" id="author_id" value="" class="form-control" style='display:none;'/>
                     {!!Form::label('name','Author Name')!!}
                     {!!Form::text('name',null,['class'=>'form-control'])!!}
                 </div>
@@ -78,8 +84,7 @@
                 </div>
                 @if($role=='2')
                     <div class="form-group">
-                        {!!Form::label('edit_id','Editorial')!!}
-                        {{ Form::text('edit_id', $user->id, ['class'=>'form-control']) }}
+                        {{ Form::text('edit_id', $user->id, ['class'=>'form-control','style'=>'display:none;']) }}
                     </div>
                 @elseif($role=='1')
                     <div class="form-group">
@@ -146,7 +151,7 @@ $(document).on('click', '.create-modal', function() {
 $('.modal').on('click', '.edit', function() {
   $.ajax({
         type: 'post',
-        url: '/update',
+        url: '/updateauthor',
         data: {
             '_token': $('input[name=_token]').val(),
             'id': $("#author_id").val(),
@@ -155,8 +160,8 @@ $('.modal').on('click', '.edit', function() {
             'edit_id': $('#edit_id').val()
 
         },
-        success: function(data) {
-            $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>"+data.name+"</td><td>"+data.country+"</td><td>{{$author->editorial->name}}</td></tr>");
+        success: function() {
+            location.reload();
         }
     });
 });

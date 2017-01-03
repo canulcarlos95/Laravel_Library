@@ -90,13 +90,15 @@ class LibroContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LibroRequest $request, Libro $libro)
+    public function update(LibroRequest $req)
     {
-        $libro->update($request->all());
-        $book = libro::find($libro->id);
-        $book->author()->detach($request->author_id);
-        $book->author()->attach($request->author_id);
-        return redirect()->route('libro.index');
+      $data = Libro::find ( $req->id );
+      $data->title = $req->title;
+      $data->pages = $req->pages;
+      $data->price = $req->price;
+      $data->edit_id = $req->edit_id;
+      $data->save ();
+      return response ()->json ( $data );
     }
 
     /**

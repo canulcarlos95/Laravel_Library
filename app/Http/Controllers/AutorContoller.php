@@ -102,7 +102,11 @@ class AutorContoller extends Controller
      */
     public function destroy(Autor $autor)
     {
+      $auth = Autor::find($autor->id);
+      if($auth->book()->detach()){
         $autor->delete();
         return redirect()->route('autor.index');
+      }
+      return redirect()->route('autor.index');
     }
 }
