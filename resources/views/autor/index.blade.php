@@ -28,13 +28,12 @@
                             <td>{{$author->editorial->name}}</td>
                             <td>
                             @if($validate==($author->name)||$validate==($author->editorial->name))
-                                <button class="btn btn-primary"
+                                <button class="edit-modal btn btn-primary"
                                         data-id="{{$author->id}}"
                                         data-name="{{$author->name}}"
                                         data-country="{{$author->country}}"
                                         data-editorial="{{$author->edit_id}}"
-                                        data-toggle="modal"
-                                        data-target="#Edit">
+                                        data-toggle="modal">
                                   Edit
                                 </button>
                                 {{link_to_route('autor.index','Update',[$author->id],['class'=>'btn btn-primary'])}}
@@ -46,7 +45,7 @@
                 </div>
             </div>
             @if($role==2)
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Create">
+                <button type="button" class="btn btn-primary create-modal" data-toggle="modal">
                   Add author
                 </button>
             @endif
@@ -55,43 +54,7 @@
     </div>
 </div>
 <!--Modals-->
-<!--Modal create author
-  @if($role==2)
-        <div class="modal-body">
-                <div class="panel-body">
-                    {!!Form::open(array('route'=>'autor.store'))!!}
-                        <div class="form-group">
-                            {!!Form::label('name','Author Name')!!}
-                            {!!Form::text('name',null,['class'=>'form-control'])!!}
-                        </div>
-                        <div class="form-group">
-                            {!!Form::label('country','Country')!!}
-                            @include('autor/countries', ['default' => null])
-                        </div>
-                        <div class="form-group">
-                            {!!Form::label('edit_id','Editorial')!!}
-                            {{ Form::text('edit_id', $user->id, ['class'=>'form-control']) }}
-                        </div>
-                        <div class="form-group">
-                            {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        </div>
-                    {!!Form::close()!!}
-                </div>
-                @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                @endif
-            </div>
-  @endif
-End Modal Create Author-->
-<!--Modal Edit author-->
-<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -102,7 +65,8 @@ End Modal Create Author-->
       </div>
       <div class="modal-body">
           <div class="panel-body">
-              <form class="form-horizontal" role="form">
+              {!!Form::open(array('route'=>'autor.store'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
+              <form class="edit-form" role="form">
                 <div class="form-group">
                     <input type="text" name="id" id="author_id" value="" class="form-control"/>
                     {!!Form::label('name','Author Name')!!}
@@ -123,7 +87,12 @@ End Modal Create Author-->
                         {{ Form::select('edit_id', $edit, null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
                     </div>
                 @endif
+                <div class="add-author form-group">
+                    {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
               </form>
+              {!!Form::close()!!}
           </div>
           @if (count($errors) > 0)
               <div class="alert alert-danger">
@@ -135,8 +104,8 @@ End Modal Create Author-->
               </div>
           @endif
           <div class="modal-footer">
-						<button type="button" class="btn btn-primary edit" data-dismiss="modal">
-							<span id="footer_action_button" class=""> Update</span>
+						<button type="button" class="btn btn-primary actionBtn" data-dismiss="modal">
+							<span id="footer_action_button" class=""> Save</span>
 						</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">
 							<span class=""></span> Close
@@ -148,8 +117,32 @@ End Modal Create Author-->
     </div>
   </div>
 </div>
-<!--End Modal Edit Author-->
+<!--End Modals-->
+<!--scripts for modals-->
 <script>
+$(document).on('click', '.edit-modal', function() {
+  $('#footer_action_button').text("Update");
+  $('.add-author').hide();
+  $('.actionBtn').addClass('edit');
+  $('.modal-title').text('Edit Author');
+  $('.form-horizontal').hide();
+  $('.edit-form').show();
+  $('#author_id').val($(this).data('id'));
+  $('#name').val($(this).data('name'));
+  $('#country').val($(this).data('country'));
+  $('#myModal').modal('show');
+});
+$(document).on('click', '.create-modal', function() {
+  $('.modal-footer').hide();
+  $('.modal-title').text('Add Author');
+  $('.add-author').show();
+  $('.edit-form').hide();
+  $('.form-horizontal').show();
+  $('#author_id').val('');
+  $('#name').val('');
+  $('#country').val('');
+  $('#myModal').modal('show');
+});
 $('.modal').on('click', '.edit', function() {
   $.ajax({
         type: 'post',
