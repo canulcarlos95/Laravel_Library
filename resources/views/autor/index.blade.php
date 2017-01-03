@@ -28,11 +28,13 @@
                             <td>{{$author->editorial->name}}</td>
                             <td>
                             @if($validate==($author->name)||$validate==($author->editorial->name))
-                                <button class="open-EditAuthorDialog btn btn-primary"
+                                <button class="btn btn-primary"
                                         data-id="{{$author->id}}"
                                         data-name="{{$author->name}}"
                                         data-country="{{$author->country}}"
-                                        data-editorial="{{$author->edit_id}}">
+                                        data-editorial="{{$author->edit_id}}"
+                                        data-toggle="modal"
+                                        data-target="#Edit">
                                   Edit
                                 </button>
                                 {{link_to_route('autor.index','Update',[$author->id],['class'=>'btn btn-primary'])}}
@@ -53,17 +55,8 @@
     </div>
 </div>
 <!--Modals-->
-<!--Modal create author-->
+<!--Modal create author
   @if($role==2)
-  <div class="modal fade" id="Create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title" id="myModalLabel">Add New Author</h4>
-        </div>
         <div class="modal-body">
                 <div class="panel-body">
                     {!!Form::open(array('route'=>'autor.store'))!!}
@@ -77,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             {!!Form::label('edit_id','Editorial')!!}
-                            {{ Form::select('edit_id',[$user->id=>$user->name], null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
+                            {{ Form::text('edit_id', $user->id, ['class'=>'form-control']) }}
                         </div>
                         <div class="form-group">
                             {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}
@@ -95,12 +88,8 @@
                         </div>
                 @endif
             </div>
-        </div>
-      </div>
-    </div>
-  </div>
   @endif
-<!--End Modal Create Author-->
+End Modal Create Author-->
 <!--Modal Edit author-->
 <div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -126,7 +115,7 @@
                 @if($role=='2')
                     <div class="form-group">
                         {!!Form::label('edit_id','Editorial')!!}
-                        {{ Form::select('edit_id', [$user->id=>$user->name], null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
+                        {{ Form::text('edit_id', $user->id, ['class'=>'form-control']) }}
                     </div>
                 @elseif($role=='1')
                     <div class="form-group">
@@ -161,15 +150,7 @@
 </div>
 <!--End Modal Edit Author-->
 <script>
-$(document).on("click", ".open-EditAuthorDialog", function () {
-  $('.modal-body #author_id').val($(this).data('id'));
-  $('.modal-body #name').val($(this).data('name'));
-  $('.modal-body #country').val($(this).data('country'));
-  $('.modal-body #edit_id').val($(this).data('edit_id'));
-  $('.modal-body #Edit').modal('show');
-  }
-);
-$('.modal-footer').on('click', '.edit', function() {
+$('.modal').on('click', '.edit', function() {
   $.ajax({
         type: 'post',
         url: '/update',
@@ -182,7 +163,7 @@ $('.modal-footer').on('click', '.edit', function() {
 
         },
         success: function(data) {
-            $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>"+data.name+"</td><td>"+data.country+"</td><td>{{$author->editorial->name}}</td>");
+            $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>"+data.name+"</td><td>"+data.country+"</td><td>{{$author->editorial->name}}</td></tr>");
         }
     });
 });
