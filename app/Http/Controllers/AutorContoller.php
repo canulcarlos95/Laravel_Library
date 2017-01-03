@@ -28,7 +28,8 @@ class AutorContoller extends Controller
         $validate = Auth::user()->name;
         $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
         $user = DB::table('editorials')->where('id', $aux)->first();
-        return view('autor.index',compact('authors','role','validate','user','autor'));
+        $edit=Editorial::pluck('name','id');
+        return view('autor.index',compact('authors','role','validate','user','autor','edit'));
 
     }
     /**
@@ -84,10 +85,14 @@ class AutorContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AutorRequest $request, Autor $autor)
+    public function update(AutorRequest $req)
     {
-        $autor->update($request->all());
-        return redirect()->route('autor.index');
+      $data = Autor::find ( $req->id );
+      $data->name = $req->name;
+      $data->country = $req->country;
+      $data->edit_id = $req->edit_id;
+      $data->save ();
+      return response ()->json ( $data );
     }
     /**
      * Remove the specified resource from storage.

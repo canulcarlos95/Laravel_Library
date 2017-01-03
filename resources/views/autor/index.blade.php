@@ -22,22 +22,20 @@
                             <th></th>
                         </tr>
                     @foreach($authors as $author)
-                        <tr>
+                        <tr class="item{{$author->id}}">
                             <td>{{$author->name}}</td>
                             <td>{{$author->country}}</td>
                             <td>{{$author->editorial->name}}</td>
                             <td>
                             @if($validate==($author->name)||$validate==($author->editorial->name))
-                                <button class="open-AddAuthorDialog edit-modal btn btn-primary"
+                                <button class="open-EditAuthorDialog btn btn-primary"
                                         data-id="{{$author->id}}"
                                         data-name="{{$author->name}}"
                                         data-country="{{$author->country}}"
-                                        data-editorial="{{$author->edit_id}}"
-                                        data-toggle="modal"
-                                        data-target="#Edit">
+                                        data-editorial="{{$author->edit_id}}">
                                   Edit
                                 </button>
-                                {{link_to_route('autor.edit','Update',[$author->id],['class'=>'btn btn-primary'])}}
+                                {{link_to_route('autor.index','Update',[$author->id],['class'=>'btn btn-primary'])}}
                             @endif
                             </td>
                         </tr>
@@ -87,16 +85,16 @@
                         </div>
                     {!!Form::close()!!}
                 </div>
+                @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                @endif
             </div>
-            @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-            @endif
         </div>
       </div>
     </div>
@@ -114,11 +112,10 @@
         <h4 class="modal-title" id="myModalLabel">Edit Author</h4>
       </div>
       <div class="modal-body">
-        <div class="panel-body">
-
-            {!!Form::model($autor,array('route'=>['autor.update',$autor->id],'method'=>'PUT'))!!}
+          <div class="panel-body">
+              <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <input type="text" name="author_id" id="author_id" value="" class="form-control"/>
+                    <input type="text" name="id" id="author_id" value="" class="form-control"/>
                     {!!Form::label('name','Author Name')!!}
                     {!!Form::text('name',null,['class'=>'form-control'])!!}
                 </div>
@@ -137,26 +134,57 @@
                         {{ Form::select('edit_id', $edit, null,['placeholder' => 'Select an editorial...','class'=>'form-control']) }}
                     </div>
                 @endif
-                <div class="form-group">
-                    {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}
-                    <a class="btn btn-danger" href="{{ url('/autor') }}">Cancel</a>
-                </div>
-            {!!Form::close()!!}
+              </form>
+          </div>
+          @if (count($errors) > 0)
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
+          <div class="modal-footer">
+						<button type="button" class="btn btn-primary edit" data-dismiss="modal">
+							<span id="footer_action_button" class=""> Update</span>
+						</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">
+							<span class=""></span> Close
+						</button>
+					</div>
         </div>
-        </div>
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         </div>
       </div>
     </div>
   </div>
 </div>
 <!--End Modal Edit Author-->
+<script>
+$(document).on("click", ".open-EditAuthorDialog", function () {
+  $('.modal-body #author_id').val($(this).data('id'));
+  $('.modal-body #name').val($(this).data('name'));
+  $('.modal-body #country').val($(this).data('country'));
+  $('.modal-body #edit_id').val($(this).data('edit_id'));
+  $('.modal-body #Edit').modal('show');
+  }
+);
+$('.modal-footer').on('click', '.edit', function() {
+  $.ajax({
+        type: 'post',
+        url: '/update',
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $("#author_id").val(),
+            'name': $('#name').val(),
+            'country': $('#country').val(),
+            'edit_id': $('#edit_id').val()
+
+        },
+        success: function(data) {
+            $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>"+data.name+"</td><td>"+data.country+"</td><td>{{$author->editorial->name}}</td>");
+        }
+    });
+});
+</script>
 @endsection

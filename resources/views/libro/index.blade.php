@@ -43,7 +43,7 @@
                                             {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
                                         </td>
                                         <td>
-                                            {{link_to_route('libro.edit','Update',[$book->id],['class'=>'btn btn-primary'])}}
+                                            {{link_to_route('libro.index','Update',[$book->id],['class'=>'btn btn-primary'])}}
                                         </td>
                                     {!!Form::close()!!}
                                     <span class="hidden">{{$isequal=false}}</span>
