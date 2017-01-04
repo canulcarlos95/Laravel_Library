@@ -32,7 +32,6 @@
                                         data-id="{{$author->id}}"
                                         data-name="{{$author->name}}"
                                         data-country="{{$author->country}}"
-                                        data-editorial="{{$author->edit_id}}"
                                         data-toggle="modal">
                                   Update
                                 </button>
@@ -83,9 +82,9 @@
                     @include('autor/countries', ['default' => null])
                 </div>
                 @if($role=='2')
-                    <div class="form-group">
-                        {{ Form::text('edit_id', $user->id, ['class'=>'form-control','style'=>'display:none;']) }}
-                    </div>
+                  <div class="form-group">
+                    <input type="text" name="id" id="edit_id" value="{{$user->id}}" class="form-control" style='display:none;'/>
+                  </div>
                 @elseif($role=='1')
                     <div class="form-group">
                         {!!Form::label('edit_id','Editorial')!!}
@@ -109,7 +108,7 @@
               </div>
           @endif
           <div class="modal-footer">
-						<button type="button" class="btn btn-primary actionBtn" data-dismiss="modal">
+						<button type="button" class="btn btn-primary actionBtn edit" data-dismiss="modal">
 							<span id="footer_action_button" class=""> Save</span>
 						</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">

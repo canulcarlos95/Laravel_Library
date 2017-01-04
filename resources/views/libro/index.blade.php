@@ -102,7 +102,7 @@
                   </div>
                   @if($role=='2')
                       <div class="form-group">
-                          {{ Form::text('edit_id',$user->id,['class'=>'form-control','style'=>'display:none']) }}
+                        <input type="text" name="id" id="edit_id" value="{{$user->id}}" class="form-control" style='display:none;'/>
                       </div>
                       <div class="form-group">
                       {!!Form::label('author','Authors')!!}
@@ -117,7 +117,7 @@
                       </div>
                   @elseif($role=='1')
                       <div class="form-group">
-                          {{ Form::text('edit_id',$editorial->id,['class'=>'form-control','style'=>'display:none']) }}
+                        <input type="text" name="id" id="edit_id" value="{{$editorial->id}}" class="form-control" style='display:none;'/>
                       </div>
                       <div class="form-group">
                           {!!Form::label('author_label','Authors')!!}<br>

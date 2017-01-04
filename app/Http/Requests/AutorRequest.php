@@ -25,7 +25,8 @@ class AutorRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'country'=>'required'
+            'country'=>'required',
+            'edit_id'=>'required'
         ];
     }
 }
