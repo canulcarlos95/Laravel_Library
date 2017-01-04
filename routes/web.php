@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::group(['prefix'=>'api'], function(){
+
+});
 Route::resource('libro','LibroContoller', ['only' => ['index', 'store', 'update', 'destroy']]);
 Route::resource('autor','AutorContoller', ['only' => ['index', 'store', 'update', 'destroy']]);
 Route::post('/updateauthor','AutorContoller@update');
