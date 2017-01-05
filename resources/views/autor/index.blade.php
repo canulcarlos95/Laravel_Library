@@ -37,7 +37,7 @@
                                 </button>
                                 </td>
                                 @if($validate==($author->editorial->name))
-                                  {!!Form::model($author,array('route'=>['autor.destroy',$author->id],'method'=>'DELETE'))!!}
+                                  {!!Form::model($author,array('route'=>['author.delete',$author->id],'method'=>'DELETE'))!!}
                                       <td>
                                           {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
                                       </td>
@@ -70,7 +70,7 @@
       </div>
       <div class="modal-body">
           <div class="panel-body">
-              {!!Form::open(array('route'=>'autor.store'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
+              {!!Form::open(array('route'=>'author.add'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
               <form class="edit-form" role="form">
                 <div class="form-group">
                     <input type="text" name="id" id="author_id" value="" class="form-control" style='display:none;'/>
@@ -82,8 +82,11 @@
                     @include('autor/countries', ['default' => null])
                 </div>
                 @if($role=='2')
-                  <div class="form-group">
-                    <input type="text" name="id" id="edit_id" value="{{$user->id}}" class="form-control" style='display:none;'/>
+                    <div class="form-group a">
+                        {{ Form::text('edit_id', $user->id, ['class'=>'form-control','style'=>'display:none;']) }}
+                    </div>
+                  <div class="form-group b">
+                    <input type="text" name="id" id="edit_id" value="{{$user->id}}" class="form-control" />
                   </div>
                 @elseif($role=='1')
                     <div class="form-group">
@@ -125,6 +128,7 @@
 <!--scripts for modals-->
 <script>
 $(document).on('click', '.edit-modal', function() {
+  $('.modal-footer').show();
   $('#footer_action_button').text("Update");
   $('.add-author').hide();
   $('.actionBtn').addClass('edit');
@@ -139,6 +143,8 @@ $(document).on('click', '.edit-modal', function() {
 $(document).on('click', '.create-modal', function() {
   $('.modal-footer').hide();
   $('.modal-title').text('Add Author');
+  $('.b').hide();
+  $('.a').show();
   $('.add-author').show();
   $('.edit-form').hide();
   $('.form-horizontal').show();
@@ -149,8 +155,8 @@ $(document).on('click', '.create-modal', function() {
 });
 $('.modal').on('click', '.edit', function() {
   $.ajax({
-        type: 'post',
-        url: '/updateauthor',
+        type: 'put',
+        url: '/api/v1/author/update',
         data: {
             '_token': $('input[name=_token]').val(),
             'id': $("#author_id").val(),

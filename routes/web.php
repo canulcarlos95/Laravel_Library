@@ -16,12 +16,21 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::group(['prefix'=>'api'], function(){
-
-});
-Route::resource('libro','LibroContoller', ['only' => ['index', 'store', 'update', 'destroy']]);
-Route::resource('autor','AutorContoller', ['only' => ['index', 'store', 'update', 'destroy']]);
-Route::post('/updateauthor','AutorContoller@update');
-Route::post('/updatebook','LibroContoller@update');
-Route::get('/redirect', 'SocialAuthController@redirect');
 Route::get('/callback', 'SocialAuthController@callback');
+Route::group(['prefix'=>'api'], function(){
+  Route::group(['prefix'=>'v1'], function(){
+    Route::group(['middleware' => 'auth'], function () {
+      Route::resource('libro','LibroContoller', ['only' => ['index']]);
+      Route::resource('autor','AutorContoller', ['only' => ['index']]);
+      Route::get('/author','AutorContoller@index')->name('author.index');
+      Route::get('/book','LibroContoller@index')->name('book.index');
+      Route::post('/author/add','AutorContoller@store')->name('author.add');
+      Route::post('/book/add','LibroContoller@store')->name('book.add');
+      Route::put('/author/update','AutorContoller@update')->name('author.update');
+      Route::put('/book/update','LibroContoller@update')->name('book.update');
+      Route::delete('/author/delete/{autor}','AutorContoller@destroy')->name('author.delete');
+      Route::delete('/book/delete/{libro}','LibroContoller@destroy')->name('book.delete');
+    });
+    Route::get('/redirect', 'SocialAuthController@redirect');
+  });
+});

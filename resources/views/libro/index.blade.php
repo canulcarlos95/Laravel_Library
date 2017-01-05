@@ -49,7 +49,7 @@
                                         Update
                                       </button>
                                     </td>
-                                    {!!Form::model($book,array('route'=>['libro.destroy',$book->id],'method'=>'DELETE'))!!}
+                                    {!!Form::model($book,array('route'=>['book.delete',$book->id],'method'=>'DELETE'))!!}
                                         <td>
                                             {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
                                         </td>
@@ -85,7 +85,7 @@
         </div>
         <div class="modal-body">
           <div class="panel-body">
-              {!!Form::open(array('route'=>'libro.store'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
+              {!!Form::open(array('route'=>'book.add'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
               <form class="edit-form" role="form">
                   <div class="form-group">
                       <input type="text" name="id" id="id" value="" class="form-control" style="display:none"/>
@@ -101,6 +101,9 @@
                       {!!Form::text('price',null,['class'=>'form-control'])!!}
                   </div>
                   @if($role=='2')
+                      <div class="form-group a">
+                          {{ Form::text('edit_id', $user->id, ['class'=>'form-control','style'=>'display:none;']) }}
+                      </div>
                       <div class="form-group">
                         <input type="text" name="id" id="edit_id" value="{{$user->id}}" class="form-control" style='display:none;'/>
                       </div>
@@ -130,7 +133,7 @@
                   @endif
                   <div class="add-author form-group">
                       {!!Form::button('Save',['type'=>'submit','class'=>'btn btn-primary'])!!}
-                      <a class="btn btn-danger" href="{{ url('/libro') }}">Cancel</a>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                   </div>
               </form>
               {!!Form::close()!!}
@@ -161,6 +164,7 @@
 <!--scripts for modals-->
 <script>
 $(document).on('click', '.edit-modal', function() {
+  $('.modal-footer').show();
   $('#footer_action_button').text("Update");
   $('.modal-footer').show();
   $('.add-author').hide();
@@ -187,8 +191,8 @@ $(document).on('click', '.create-modal', function() {
 });
 $('.modal').on('click', '.edit', function() {
   $.ajax({
-        type: 'post',
-        url: '/updatebook',
+        type: 'put',
+        url: '/api/v1/book/update',
         data: {
             '_token': $('input[name=_token]').val(),
             'id': $("#id").val(),

@@ -10,10 +10,6 @@ use Library\Http\Requests\LibroRequest;
 use Illuminate\Support\Facades\Auth;
 class LibroContoller extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +51,7 @@ class LibroContoller extends Controller
         $myCheckboxes = $request->input('author_id');
         $book = libro::find($created->id);
         $book->author()->attach($myCheckboxes);
-        return redirect()->route('libro.index');
+        return redirect()->route('book.index');
     }
 
     /**
@@ -66,21 +62,7 @@ class LibroContoller extends Controller
      */
     public function edit(Libro $libro)
     {
-        if((Auth::user()->role_id)=='3'&&Auth::user()->name!=($libro->autor->name)){
-            return view('errors.error');
-        }
-        if(Auth::user()->role_id=='2'){
-            $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
-            $user = DB::table('editorials')->where('id', $aux)->first();
-            $name = DB::table('autors')->where('edit_id', $aux)->get();
-            $role = Auth::user()->role_id;
-            return view('libro.edit',compact('libro','name','user','role'));
-        }
-        $authorname = Autor::pluck('name','id')->search(Auth::user()->name);
-        $user = DB::table('autors')->where('id', $authorname)->first();
-        $editorial = DB::table('editorials')->where('id', $user->edit_id)->first();
-        $role = Auth::user()->role_id;
-        return view('libro.edit',compact('libro','role','user','editorial'));
+
     }
 
     /**
@@ -110,8 +92,10 @@ class LibroContoller extends Controller
     public function destroy(Libro $libro)
     {
         $book = libro::find($libro->id);
-        $book->author()->detach();
-        $libro->delete();
-        return redirect()->route('libro.index');
+        if($book->author()->detach()){
+          $libro->delete();
+          return redirect()->route('book.index');
+        }
+        return view('errors.503');
     }
 }

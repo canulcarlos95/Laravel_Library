@@ -81,7 +81,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
-                                <a class="btn btn-link" href="redirect">Facebook Login</a>
+                                <a class="btn btn-link" href="{{ url('/api/v1/redirect') }}">Facebook Login</a>
                             </div>
                         </div>
                     </form>

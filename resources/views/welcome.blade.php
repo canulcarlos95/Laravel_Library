@@ -54,8 +54,8 @@
 <div class="flex-center position-ref full-height">
     <div class="content">
         <div class="title m-b-md links">
-            <a href="autor">Authors</a>
-            <a href="libro">Books</a>
+            <a href="api/v1/author">Authors</a>
+            <a href="api/v1/book">Books</a>
         </div>
     </div>
 

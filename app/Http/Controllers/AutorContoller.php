@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AutorContoller extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +37,7 @@ class AutorContoller extends Controller
     public function store(AutorRequest $request)
     {
         autor::create($request->all());
-        return redirect()->route('autor.index');
+        return redirect()->route('author.index');
     }
 
     /**
@@ -63,18 +59,7 @@ class AutorContoller extends Controller
      */
      public function edit(Autor $autor)
     {
-        if((Auth::user()->role_id)=='2'){
-            $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
-            $user = DB::table('editorials')->where('id', $aux)->first();
-            $role = Auth::user()->role_id;
-            return view('autor.edit',compact('autor','user','role'));
-        }
-        elseif(Auth::user()->name==$autor->name){
-            $edit=Editorial::pluck('name','id');
-            $role = Auth::user()->role_id;
-            return view('autor.edit',compact('autor','edit','role'));
-        }
-        return view('errors.error');
+
     }
 
 
@@ -105,8 +90,8 @@ class AutorContoller extends Controller
       $auth = Autor::find($autor->id);
       if($auth->book()->detach()){
         $autor->delete();
-        return redirect()->route('autor.index');
+        return redirect()->route('author.index');
       }
-      return redirect()->route('autor.index');
+      return view('errors.503');
     }
 }
