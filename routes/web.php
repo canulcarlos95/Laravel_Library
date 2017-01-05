@@ -24,12 +24,6 @@ Route::group(['prefix'=>'api'], function(){
       Route::resource('autor','AutorContoller', ['only' => ['index']]);
       Route::get('/author','AutorContoller@index')->name('author.index');
       Route::get('/book','LibroContoller@index')->name('book.index');
-      Route::post('/author/add','AutorContoller@store')->name('author.add');
-      Route::post('/book/add','LibroContoller@store')->name('book.add');
-      Route::put('/author/update','AutorContoller@update')->name('author.update');
-      Route::put('/book/update','LibroContoller@update')->name('book.update');
-      Route::delete('/author/delete/{autor}','AutorContoller@destroy')->name('author.delete');
-      Route::delete('/book/delete/{libro}','LibroContoller@destroy')->name('book.delete');
     });
     Route::get('/redirect', 'SocialAuthController@redirect');
   });
