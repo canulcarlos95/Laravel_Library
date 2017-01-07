@@ -56,6 +56,7 @@
         <div class="title m-b-md links">
             <a href="api/v1/author">Authors</a>
             <a href="api/v1/book">Books</a>
+            <a href="api/v1/editorial">Editorials</a>
         </div>
     </div>
 

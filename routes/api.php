@@ -22,6 +22,7 @@ Route::group(['prefix'=>'v1'], function(){
     Route::post('/book/add','LibroContoller@store')->name('book.add');
     Route::put('/author/update','AutorContoller@update')->name('author.update');
     Route::put('/book/update','LibroContoller@update')->name('book.update');
+    Route::put('/editorial/update','EditorialContoller@update')->name('editorial.update');
     Route::delete('/author/delete/{autor}','AutorContoller@destroy')->name('author.delete');
     Route::delete('/book/delete/{libro}','LibroContoller@destroy')->name('book.delete');
 });

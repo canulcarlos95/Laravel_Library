@@ -6,8 +6,10 @@
         <div class="col-md-8 col-md-offset-2">
 
             <div class="panel panel-default">
-                <div class="panel-heading">Authors</div>
                 <div class="panel-body">
+                    <div class="pull-left">
+                      <h3>Authors</h3>
+                    </div>
                     {!!Form::open(['route'=>'autor.index','method'=>'GET','class'=>'navbar-form pull-right'])!!}
                         <div class="input-group">
                             {!!Form::text('name',null,['class'=>'form-control','placeholder'=>'Search an author...','aria-describedby'=>'search'])!!}

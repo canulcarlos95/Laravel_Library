@@ -10,9 +10,10 @@
         @endif
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Books</div>
-
                 <div class="panel-body">
+                    <div class="pull-left">
+                      <h3>Books</h3>
+                    </div>
                     {!!Form::open(['route'=>'libro.index','method'=>'GET','class'=>'navbar-form pull-right'])!!}
                         <div class="input-group">
                             {!!Form::text('title',null,['class'=>'form-control','placeholder'=>'Search a Book...','aria-describedby'=>'search'])!!}
