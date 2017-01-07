@@ -23,10 +23,9 @@ class CreateLibrosTable extends Migration
             $table->timestamps();
         });
         Schema::create('book_authors', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('author_id')->unsigned();
             $table->integer('book_id')->unsigned();
-            $table->foreign('author_id')->references('id')->on('autors');
-            $table->foreign('book_id')->references('id')->on('libros');
             $table->timestamps();
         });
     }

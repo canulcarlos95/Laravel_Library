@@ -3,6 +3,11 @@
 @section('content')
 <div class="container">
     <div class="row">
+        @if (session('status'))
+          <div class="alert alert-danger">
+              {{ session('status') }}
+          </div>
+        @endif
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Books</div>
@@ -113,12 +118,14 @@
                               @foreach($name as $authname)
                                   <label>
                                     <input name='author_id[]' type="checkbox" value='{{$authname->id}}'>{{$authname->name}}
-
                                   </label>
                               @endforeach
                           </div>
                       </div>
                   @elseif($role=='1')
+                      <div class="form-group a">
+                          {{ Form::text('edit_id', $editorial->id, ['class'=>'form-control','style'=>'display:none;']) }}
+                      </div>
                       <div class="form-group">
                         <input type="text" name="id" id="edit_id" value="{{$editorial->id}}" class="form-control" style='display:none;'/>
                       </div>
@@ -126,7 +133,7 @@
                           {!!Form::label('author_label','Authors')!!}<br>
                           <div class="checkbox">
                               <label>
-                                  <input name='author_id' type="checkbox" value='{{$user->id}}' checked>{{$user->name}}
+                                  <input name='author_id[]' type="checkbox" value='{{$user->id}}' checked>{{$user->name}}
                               </label>
                           </div>
                       </div>
@@ -189,7 +196,12 @@ $(document).on('click', '.create-modal', function() {
   $('#price').val('');
   $('#myModal').modal('show');
 });
+
 $('.modal').on('click', '.edit', function() {
+  var values = new Array();
+  $.each($("input[name='author_id[]']:checked"), function() {
+    values.push($(this).val());
+  });
   $.ajax({
         type: 'put',
         url: '/api/v1/book/update',
@@ -199,11 +211,11 @@ $('.modal').on('click', '.edit', function() {
             'title': $('#title').val(),
             'pages': $('#pages').val(),
             'price': $('#price').val(),
-            'edit_id': $('#edit_id').val()
-
+            'edit_id': $('#edit_id').val(),
+            'author_id':values,
         },
         success: function() {
-            location.reload();
+          location.reload();
         }
     });
 });

@@ -87,8 +87,7 @@ class AutorContoller extends Controller
      */
     public function destroy(Autor $autor)
     {
-      $auth = Autor::find($autor->id);
-      if($auth->book()->detach()){
+      if(DB::table('book_authors')->where('author_id', '=', $autor->id)->delete()){
         $autor->delete();
         return redirect()->route('author.index');
       }

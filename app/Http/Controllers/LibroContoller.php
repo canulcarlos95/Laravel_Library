@@ -72,13 +72,16 @@ class LibroContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LibroRequest $req)
+    public function update(LibroRequest $request)
     {
-      $data = Libro::find ( $req->id );
-      $data->title = $req->title;
-      $data->pages = $req->pages;
-      $data->price = $req->price;
-      $data->edit_id = $req->edit_id;
+      $book = libro::find($request->id);
+      $data = Libro::find ( $request->id );
+      $book->author()->detach();
+      $data->author()->attach($request->author_id);
+      $data->title = $request->title;
+      $data->pages = $request->pages;
+      $data->price = $request->price;
+      $data->edit_id = $request->edit_id;
       $data->save ();
       return response ()->json ( $data );
     }
@@ -94,8 +97,9 @@ class LibroContoller extends Controller
         $book = libro::find($libro->id);
         if($book->author()->detach()){
           $libro->delete();
-          return redirect()->route('book.index');
+          return redirect()->route('book.index')->with('status', 'Book Deleted!');
         }
-        return view('errors.503');
+        $libro->delete();
+        return redirect()->route('book.index')->with('status', 'Book Cannot be Deleted!');
     }
 }
