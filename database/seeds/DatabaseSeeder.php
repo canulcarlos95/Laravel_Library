@@ -139,6 +139,7 @@ class DatabaseSeeder extends Seeder
       ));
       DB::table('editorials')->insert(array(
         'name'  => 'Independent',
+        'email'  => 'Empty',
         'created_at' => date('Y-m-d H:m:s'),
         'updated_at' => date('Y-m-d H:m:s')
       ));

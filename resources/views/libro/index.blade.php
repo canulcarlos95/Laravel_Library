@@ -38,12 +38,12 @@
                             <td>
                                 @foreach($book->author as $author)
                                     {{$author->name}},
-                                    @if($validate==($author->name))
+                                    @if($validate==($author->email))
                                        <span class="hidden">{{$isequal=true}}</span>
                                     @endif
                                 @endforeach
                             </td>
-                            @if($validate==($book->editorial->name)||$isequal||$validate==($author->name))
+                            @if($validate==($book->editorial->email)||$isequal)
                                     <td>
                                       <button class="edit-modal btn btn-primary"
                                               data-id="{{$book->id}}"

@@ -4,6 +4,8 @@ namespace Library\Http\Controllers;
 use Library\Models\Editorial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Library\Http\Requests\EditRequest;
+
 class EditorialController extends Controller
 {
   /**
@@ -15,7 +17,7 @@ class EditorialController extends Controller
   {
     $editorials = Editorial::Search($request->name)->paginate(10);
     $role = Auth::user()->role_id;
-    $validate = Auth::user()->name;
+    $validate = Auth::user()->email;
     return view('editorial.index',compact('role','editorials','validate'));
   }
   /**
@@ -24,7 +26,7 @@ class EditorialController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(AutorRequest $request)
+  public function store()
   {
 
   }
@@ -59,9 +61,12 @@ class EditorialController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update()
+  public function update(EditRequest $req)
   {
-
+    $data = Editorial::find ( $req->id );
+    $data->name = $req->name;
+    $data->save ();
+    return response ()->json ( $data );
   }
   /**
    * Remove the specified resource from storage.

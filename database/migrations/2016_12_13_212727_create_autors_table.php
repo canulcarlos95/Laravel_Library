@@ -16,11 +16,13 @@ class CreateAutorsTable extends Migration
         Schema::create('editorials', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('email')->unique()->nullable();
             $table->timestamps();
         });
         Schema::create('autors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('email')->unique()->nullable();
             $table->string('country');
             $table->integer('edit_id')->unsigned()->nullable();
             $table->foreign('edit_id')->references('id')->on('editorials');

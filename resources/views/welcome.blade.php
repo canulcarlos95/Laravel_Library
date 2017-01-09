@@ -44,7 +44,6 @@
                 padding: 0 25px;
                 letter-spacing: .1rem;
                 text-decoration: none;
-                text-transform: uppercase;
             }
 
             .m-b-md {

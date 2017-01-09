@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Editorial extends Model
 {
-	protected $fillable = ['id','name'];
+	protected $fillable = ['id','name','email'];
 	public function scopeSearch($query, $name){
 		return $query->where('name','LIKE',"%$name%");
 	}

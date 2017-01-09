@@ -19,6 +19,7 @@
                     <table class="table">
                         <tr>
                             <th>Author Name</th>
+                            <th>Email</th>
                             <th>Country</th>
                             <th>Editorial</th>
                             <th></th>
@@ -26,9 +27,10 @@
                     @foreach($authors as $author)
                         <tr class="item{{$author->id}}">
                             <td>{{$author->name}}</td>
+                            <td>{{$author->email}}</td>
                             <td>{{$author->country}}</td>
                             <td>{{$author->editorial->name}}</td>
-                            @if($validate==($author->name)||$validate==($author->editorial->name))
+                            @if($validate==($author->email)||$validate==($author->editorial->email))
                                 <td>
                                 <button class="edit-modal btn btn-primary"
                                         data-id="{{$author->id}}"
@@ -38,7 +40,7 @@
                                   Update
                                 </button>
                                 </td>
-                                @if($validate==($author->editorial->name))
+                                @if($validate==($author->editorial->email))
                                   {!!Form::model($author,array('route'=>['author.delete',$author->id],'method'=>'DELETE'))!!}
                                       <td>
                                           {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
@@ -88,7 +90,7 @@
                         {{ Form::text('edit_id', $user->id, ['class'=>'form-control','style'=>'display:none;']) }}
                     </div>
                   <div class="form-group b">
-                    <input type="text" name="id" id="edit_id" value="{{$user->id}}" class="form-control" />
+                    <input type="text" name="id" id="edit_id" value="{{$user->id}}" class="form-control" style='display:none;'/>
                   </div>
                 @elseif($role=='1')
                     <div class="form-group">

@@ -39,7 +39,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');        
+        $this->middleware('guest');
     }
 
     /**
@@ -65,9 +65,10 @@ class RegisterController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {   
+    {
         if($data['role_id']=='1'&&Autor::create([
                 'name'=>$data['name'],
+                'email'=>$data['email'],
                 'country'=>'',
                 'edit_id'=>'1'
             ]))
@@ -81,6 +82,7 @@ class RegisterController extends Controller
         }
         elseif($data['role_id']=='2'&&Editorial::create([
                 'name'=>$data['name'],
+                'email'=>$data['email'],
             ]))
         {
             return User::create([
@@ -95,6 +97,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role_id'=>$data['role_id'],
-        ]);      
+        ]);
     }
 }

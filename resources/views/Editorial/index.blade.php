@@ -17,21 +17,21 @@
                     {!!Form::close()!!}
                     <table class="table">
                         <tr>
-                            <th>id</th>
                             <th>Name</th>
+                            <th>Email</th>
                             <th>Authors</th>
                             <th></th>
                         </tr>
                         @foreach($editorials as $edit)
                         <tr>
-                            <td>{{$edit->id}}</td>
                             <td>{{$edit->name}}</td>
+                            <td>{{$edit->email}}</td>
                             <td>
                             @foreach($edit->author as $author)
                               {{$author->name}}
                             @endforeach
                             </td>
-                            @if($validate==($edit->name))
+                            @if($validate==($edit->email))
                                 <td>
                                 <button class="edit-modal btn btn-primary"
                                         data-id="{{$edit->id}}"
@@ -46,6 +46,7 @@
                     </table>
                 </div>
             </div>
+            <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
         </div>
     </div>
 </div>
@@ -64,11 +65,15 @@
           <form class="" role="form">
             <div class="form-group">
               <label>id</label>
-              <input type="text" name="id" id="author_id" value="" class="form-control" readonly/>
+              <input type="text" name="id" id="id" value="" class="form-control" readonly/>
+            </div>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" name="name" id="name" value="" class="form-control"/>
             </div>
           </form>
           <div class="modal-footer">
-						<button type="button" class="btn btn-primary actionBtn" data-dismiss="modal">
+						<button type="button" class="edit btn btn-primary actionBtn" data-dismiss="modal">
 							<span id="footer_action_button" class=""> Update</span>
 						</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -84,28 +89,25 @@
 <!--scripts for modals-->
 <script>
 $(document).on('click', '.edit-modal', function() {
-  $('.modal-footer').show();
-  $('.modal-footer').show();
-  $('.add-author').hide();
-  $('.actionBtn').addClass('edit');
   $('#id').val($(this).data('id'));
-  $('#title').val($(this).data('title'));
-  $('#pages').val($(this).data('pages'));
-  $('#price').val($(this).data('price'));
+  $('#name').val($(this).data('name'));
   $('#myModal').modal('show');
 });
-  $.ajax({
-        type: 'put',
-        url: '/api/v1/book/update',
-        data: {
-            '_token': $('input[name=_token]').val(),
-            'id': $("#id").val(),
 
-        },
-        success: function() {
-          location.reload();
-        }
-    });
+$('.modal').on('click', '.edit', function() {
+  $.ajax({
+          type: 'put',
+          url: '/api/v1/editorial/update',
+          data: {
+              '_token': $('input[name=_token]').val(),
+              'id': $("#id").val(),
+              'name': $("#name").val(),
+
+          },
+          success: function() {
+            location.reload();
+          }
+      });
 });
 </script>
 @endsection

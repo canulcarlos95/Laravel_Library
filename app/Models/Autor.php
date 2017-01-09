@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Library\Models\Libro;
 class Autor extends Model
 {
-    protected $fillable = ['name','country','edit_id'];//
+    protected $fillable = ['name','country','edit_id','email'];//
 
     public function book() {
         return $this->belongsToMany('Library\Models\Libro','book_authors','book_id','author_id')->withTimestamps();

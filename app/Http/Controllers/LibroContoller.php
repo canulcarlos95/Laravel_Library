@@ -20,9 +20,9 @@ class LibroContoller extends Controller
         if((Auth::user()->role_id)=='1'){
             $books=Libro::Search($request->title)->paginate(30);
             $role = Auth::user()->role_id;
-            $validate = Auth::user()->name;
+            $validate = Auth::user()->email;
             $isequal=false;
-            $authorname = Autor::pluck('name','id')->search(Auth::user()->name);
+            $authorname = Autor::pluck('email','id')->search(Auth::user()->email);
             $user = DB::table('autors')->where('id', $authorname)->first();
             $editorial = DB::table('editorials')->where('id', $user->edit_id)->first();
             $role = Auth::user()->role_id;
@@ -30,9 +30,9 @@ class LibroContoller extends Controller
         }
         $books=Libro::Search($request->title)->paginate(30);
         $role = Auth::user()->role_id;
-        $validate = Auth::user()->name;
+        $validate = Auth::user()->email;
         $isequal=false;
-        $aux =Editorial::pluck('name','id')->search(Auth::user()->name);
+        $aux =Editorial::pluck('email','id')->search(Auth::user()->email);
         $user = DB::table('editorials')->where('id', $aux)->first();
         $name = DB::table('autors')->where('edit_id', $aux)->get();
         $role = Auth::user()->role_id;
