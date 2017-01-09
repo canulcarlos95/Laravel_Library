@@ -24,8 +24,7 @@ class CreateAutorsTable extends Migration
             $table->string('name');
             $table->string('email')->unique()->nullable();
             $table->string('country');
-            $table->integer('edit_id')->unsigned()->nullable();
-            $table->foreign('edit_id')->references('id')->on('editorials');
+            $table->integer('edit_id')->unsigned();
             $table->timestamps();
         });
     }

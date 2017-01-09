@@ -19,7 +19,6 @@ class CreateLibrosTable extends Migration
             $table->integer('pages');
             $table->integer('price');
             $table->integer('edit_id')->unsigned();
-            $table->foreign('edit_id')->references('id')->on('editorials');
             $table->timestamps();
         });
         Schema::create('book_authors', function (Blueprint $table) {

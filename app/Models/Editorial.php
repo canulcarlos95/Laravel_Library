@@ -13,4 +13,7 @@ class Editorial extends Model
 	public function author() {
 		return $this->hasMany("Library\Models\Autor", "edit_id", "id");
 	}
+	public function book() {
+		return $this->hasMany("Library\Models\Libro", "edit_id", "id");
+	}
 }
