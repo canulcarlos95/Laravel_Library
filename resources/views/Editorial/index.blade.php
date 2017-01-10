@@ -28,7 +28,7 @@
                             <td>{{$edit->email}}</td>
                             <td>
                             @foreach($edit->author as $author)
-                              {{$author->name}}
+                              {{$author->name}},
                             @endforeach
                             </td>
                             @if($validate==($edit->email))

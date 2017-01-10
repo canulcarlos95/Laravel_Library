@@ -36,15 +36,16 @@ class AutorContoller extends Controller
      */
     public function store(AutorRequest $request)
     {
+      $email=$request->name.substr($request->country,0,3).'@library.com';
       if(User::create([
           'name' => $request->name,
-          'email' => $request->name.'@library.com',
+          'email' => $email,
           'password' => bcrypt('123456'),
           'role_id'=>'1',
       ])){
         autor::create([
         'name' => $request->name,
-        'email' => $request->name.'@library.com',
+        'email' => $email,
         'country' => $request->country,
         'edit_id' => $request->edit_id,
         ]);
@@ -107,6 +108,10 @@ class AutorContoller extends Controller
         $autor->delete();
         return redirect()->route('author.index');
       }
-      return view('errors.503');
+      DB::table('users')
+          ->where('email', $autor->email)
+          ->update(['role_id' => 3]);
+      $autor->delete();
+      return redirect()->route('author.index');
     }
 }
