@@ -124,7 +124,7 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -179,7 +179,7 @@ return [
         Library\Providers\EventServiceProvider::class,
         Library\Providers\RouteServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-
+        Laravel\Passport\PassportServiceProvider::class,
 
     ],
 
