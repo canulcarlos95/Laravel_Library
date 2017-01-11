@@ -55,7 +55,7 @@
                                         Update
                                       </button>
                                     </td>
-                                    {!!Form::model($book,array('route'=>['book.delete',$book->id],'method'=>'DELETE'))!!}
+                                    {!!Form::model($book,array('route'=>['book.destroy',$book->id],'method'=>'DELETE'))!!}
                                         <td>
                                             {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
                                         </td>
@@ -91,7 +91,7 @@
         </div>
         <div class="modal-body">
           <div class="panel-body">
-              {!!Form::open(array('route'=>'book.add'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
+              {!!Form::open(array('route'=>'book.create'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
               <form class="edit-form" role="form">
                   <div class="form-group">
                       <input type="text" name="id" id="id" value="" class="form-control" style="display:none"/>

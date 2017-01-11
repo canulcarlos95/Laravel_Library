@@ -41,7 +41,7 @@
                                 </button>
                                 </td>
                                 @if($validate==($author->editorial->email))
-                                  {!!Form::model($author,array('route'=>['author.delete',$author->id],'method'=>'DELETE'))!!}
+                                  {!!Form::model($author,array('route'=>['author.destroy',$author->id],'method'=>'DELETE'))!!}
                                       <td>
                                           {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
                                       </td>
@@ -74,7 +74,7 @@
       </div>
       <div class="modal-body">
           <div class="panel-body">
-              {!!Form::open(array('route'=>'author.add'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
+              {!!Form::open(array('route'=>'author.create'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
               <form class="edit-form" role="form">
                 <div class="form-group">
                     <input type="text" name="id" id="author_id" value="" class="form-control" style='display:none;'/>
@@ -83,7 +83,7 @@
                 </div>
                 <div class="form-group">
                     {!!Form::label('country','Country')!!}
-                    @include('autor/countries', ['default' => null])
+                    @include('author/countries', ['default' => null])
                 </div>
                 @if($role=='2')
                     <div class="form-group a">

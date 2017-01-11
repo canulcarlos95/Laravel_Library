@@ -22,10 +22,8 @@ Route::group(['prefix'=>'api'], function(){
     Route::group(['middleware' => 'auth'], function () {
       Route::resource('libro','LibroContoller', ['only' => ['index']]);
       Route::resource('autor','AutorContoller', ['only' => ['index']]);
-      Route::resource('editorial','EditorialContoller', ['only' => ['index']]);
-      Route::get('/editorial','EditorialController@index')->name('editorial.index');
-      Route::get('/author','AutorContoller@index')->name('author.index');
-      Route::get('/book','LibroContoller@index')->name('book.index');
+      Route::resource('editorial','EditorialController', ['only' => ['index']]);
+      Route::resource('author', 'API\v1\AuthorContoller');
     });
     Route::get('/redirect', 'SocialAuthController@redirect');
   });

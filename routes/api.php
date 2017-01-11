@@ -18,11 +18,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::group(['prefix'=>'v1'], function(){
-    Route::post('/author/add','AutorContoller@store')->name('author.add');
-    Route::post('/book/add','LibroContoller@store')->name('book.add');
-    Route::put('/author/update','AutorContoller@update')->name('author.update');
-    Route::put('/book/update','LibroContoller@update')->name('book.update');
-    Route::put('/editorial/update','EditorialController@update')->name('editorial.update');
-    Route::delete('/author/delete/{autor}','AutorContoller@destroy')->name('author.delete');
-    Route::delete('/book/delete/{libro}','LibroContoller@destroy')->name('book.delete');
+  Route::resource('book','LibroContoller', ['only' => ['create','update','destroy']]);
+  Route::resource('author','AutorContoller', ['only' => ['create','update','destroy']]);
+  Route::resource('editorial','EditorialController', ['only' => ['update']]);
 });
