@@ -10,7 +10,7 @@
                     <div class="pull-left">
                       <h3>Authors</h3>
                     </div>
-                    {!!Form::open(['route'=>'autor.index','method'=>'GET','class'=>'navbar-form pull-right'])!!}
+                    {!!Form::open(['route'=>'author.index','method'=>'GET','class'=>'navbar-form pull-right'])!!}
                         <div class="input-group">
                             {!!Form::text('name',null,['class'=>'form-control','placeholder'=>'Search an author...','aria-describedby'=>'search'])!!}
                             <span class="input-group-addon" id="search"><button style="border:none;"><span class="glyphicon glyphicon-search"/></button></span>
@@ -41,11 +41,15 @@
                                 </button>
                                 </td>
                                 @if($validate==($author->editorial->email))
-                                  {!!Form::model($author,array('route'=>['author.destroy',$author->id],'method'=>'DELETE'))!!}
-                                      <td>
-                                          {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
-                                      </td>
-                                  {!!Form::close()!!}
+                                <td>
+                                    <button class="delete btn btn-danger"
+                                            data-id="{{$author->id}}"
+                                            data-name="{{$author->name}}"
+                                            data-country="{{$author->country}}"
+                                            data-editorial="{{$author->editorial->id}}">
+                                      Delete
+                                    </button>
+                                </td>
                                 @endif
                             @endif
                         </tr>
@@ -74,7 +78,7 @@
       </div>
       <div class="modal-body">
           <div class="panel-body">
-              {!!Form::open(array('route'=>'author.create'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
+              {!!Form::open(array('route'=>'author.store'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
               <form class="edit-form" role="form">
                 <div class="form-group">
                     <input type="text" name="id" id="author_id" value="" class="form-control" style='display:none;'/>
@@ -156,6 +160,22 @@ $(document).on('click', '.create-modal', function() {
   $('#name').val('');
   $('#country').val('');
   $('#myModal').modal('show');
+});
+$(document).on('click', '.delete', function() {
+  $.ajax({
+        type: 'delete',
+        url: '/api/v1/author/destroy',
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $(this).data('id'),
+            'name': $(this).data('name'),
+            'country': $(this).data('country'),
+            'edit_id': $(this).data('editorial'),
+        },
+        success: function() {
+          location.reload();
+        }
+    });
 });
 $('.modal').on('click', '.edit', function() {
   $.ajax({

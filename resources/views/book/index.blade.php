@@ -14,7 +14,7 @@
                     <div class="pull-left">
                       <h3>Books</h3>
                     </div>
-                    {!!Form::open(['route'=>'libro.index','method'=>'GET','class'=>'navbar-form pull-right'])!!}
+                    {!!Form::open(['route'=>'book.index','method'=>'GET','class'=>'navbar-form pull-right'])!!}
                         <div class="input-group">
                             {!!Form::text('title',null,['class'=>'form-control','placeholder'=>'Search a Book...','aria-describedby'=>'search'])!!}
                             <span class="input-group-addon" id="search"><button class="glyphicon glyphicon-search" style="border:none;"/></span>
@@ -55,11 +55,16 @@
                                         Update
                                       </button>
                                     </td>
-                                    {!!Form::model($book,array('route'=>['book.destroy',$book->id],'method'=>'DELETE'))!!}
-                                        <td>
-                                            {!!Form::button('Delete',['class'=>'btn btn-danger','type'=>'submit'])!!}
-                                        </td>
-                                    {!!Form::close()!!}
+                                    <td>
+                                        <button class="delete btn btn-danger"
+                                                data-id="{{$book->id}}"
+                                                data-title="{{$book->title}}"
+                                                data-pages="{{$book->pages}}"
+                                                data-price="{{$book->price}}"
+                                                data-editorial="{{$book->edit_id}}">
+                                          Delete
+                                        </button>
+                                    </td>
                                     <span class="hidden">{{$isequal=false}}</span>
                             @endif
                         </tr>
@@ -91,7 +96,7 @@
         </div>
         <div class="modal-body">
           <div class="panel-body">
-              {!!Form::open(array('route'=>'book.create'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
+              {!!Form::open(array('route'=>'book.store'),['class'=>'form-horizontal','style'=>'display:none;'])!!}
               <form class="edit-form" role="form">
                   <div class="form-group">
                       <input type="text" name="id" id="id" value="" class="form-control" style="display:none"/>
@@ -197,7 +202,24 @@ $(document).on('click', '.create-modal', function() {
   $('#price').val('');
   $('#myModal').modal('show');
 });
-
+$(document).on('click', '.delete', function() {
+  $.ajax({
+        type: 'delete',
+        url: '/api/v1/book/destroy',
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'id': $(this).data('id'),
+            'title': $(this).data('title'),
+            'pages': $(this).data('pages'),
+            'price': $(this).data('price'),
+            'edit_id': $(this).data('editorial'),
+            'author_id':'99',
+        },
+        success: function() {
+          location.reload();
+        }
+    });
+});
 $('.modal').on('click', '.edit', function() {
   var values = new Array();
   $.each($("input[name='author_id[]']:checked"), function() {

@@ -18,7 +18,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::group(['prefix'=>'v1'], function(){
-  Route::resource('book','LibroContoller', ['only' => ['create','update','destroy']]);
-  Route::resource('author','AutorContoller', ['only' => ['create','update','destroy']]);
-  Route::resource('editorial','EditorialController', ['only' => ['update']]);
+  Route::resource('book','API\v1\BookContoller', ['only' => ['store','update','destroy']]);
+  Route::resource('author', 'API\v1\AuthorContoller', ['only' => ['store','update','destroy']]);
+  Route::resource('editorial','API\v1\EditorialController', ['only' => ['update']]);
 });
