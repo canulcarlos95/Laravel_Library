@@ -1,7 +1,6 @@
 <?php
 
 namespace Library\Http\Controllers\API\v1;
-
 use DB;
 use Library\Models\Autor;
 use Library\Models\User;
@@ -30,7 +29,6 @@ class AuthorContoller
         ]);
         return redirect()->route('author.index');
       }
-        return view('errors.503');
     }
 
     public function update(AutorRequest $req)
@@ -40,7 +38,6 @@ class AuthorContoller
       $data->country = $req->country;
       $data->edit_id = $req->edit_id;
       $data->save ();
-      return response ()->json ( $data );
     }
 
     public function destroy(AutorRequest $request)

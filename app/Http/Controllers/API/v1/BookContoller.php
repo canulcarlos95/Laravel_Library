@@ -8,7 +8,7 @@ use Library\Models\Editorial;
 use Illuminate\Http\Request;
 use Library\Http\Requests\LibroRequest;
 use Illuminate\Support\Facades\Auth;
-class BookContoller extends Controller
+class BookContoller
 {
     public function store(LibroRequest $request)
     {
@@ -30,7 +30,6 @@ class BookContoller extends Controller
       $data->price = $request->price;
       $data->edit_id = $request->edit_id;
       $data->save ();
-      return response ()->json ( $data );
     }
 
     public function destroy(LibroRequest $request)
