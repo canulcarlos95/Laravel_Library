@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/laravel-library":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/laravel-library","hostpath":"C:/Users/Carlos/Code/Laravel_Library","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/Carlos/Code/Laravel_Library","disabled":false,"__vagrantfile":true}}}

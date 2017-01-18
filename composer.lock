@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5416b0fb5f7040b2644f069a358cfdc8",
-    "content-hash": "8154cd49c3ff42d0c638c89bdecb38e5",
+    "hash": "bef5ed8dd25b7c79eb37d0cfdc00e68a",
+    "content-hash": "37a1e7c7aefd02cc26fa9794319d5329",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2903,52 +2903,6 @@
                 "test"
             ],
             "time": "2015-05-11 14:41:42"
-        },
-        {
-            "name": "laravel/homestead",
-            "version": "v4.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/homestead.git",
-                "reference": "5af81945e933d90adfaffcf2400d23a0d511da84"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/homestead/zipball/5af81945e933d90adfaffcf2400d23a0d511da84",
-                "reference": "5af81945e933d90adfaffcf2400d23a0d511da84",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.9",
-                "symfony/console": "~2.3|~3.0",
-                "symfony/process": "~2.3|~3.0"
-            },
-            "bin": [
-                "homestead"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laravel\\Homestead\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
-                }
-            ],
-            "description": "A virtual machine for web artisans.",
-            "time": "2017-01-05 15:32:34"
         },
         {
             "name": "mockery/mockery",
